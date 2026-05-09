@@ -29,8 +29,6 @@ radial-gradient(circle at top right,#1b2957 0%,transparent 30%),
 radial-gradient(circle at bottom left,#3d1148 0%,transparent 25%);
 }
 
-/* SCROLL */
-
 ::-webkit-scrollbar{
 width:8px;
 }
@@ -39,8 +37,6 @@ width:8px;
 background:gold;
 border-radius:20px;
 }
-
-/* HEADER */
 
 header{
 position:sticky;
@@ -56,8 +52,6 @@ border-bottom:1px solid rgba(255,215,0,.3);
 flex-wrap:wrap;
 gap:20px;
 }
-
-/* LOGO */
 
 .logo{
 display:flex;
@@ -155,8 +149,6 @@ font-size:13px;
 opacity:.7;
 }
 
-/* GOOGLE */
-
 .google-login{
 display:flex;
 align-items:center;
@@ -186,8 +178,6 @@ width:25px;
 height:25px;
 }
 
-/* SEARCH */
-
 .search-box input{
 width:260px;
 padding:12px 15px;
@@ -197,8 +187,6 @@ background:#121f3f;
 color:white;
 outline:none;
 }
-
-/* HERO */
 
 .hero{
 height:430px;
@@ -244,8 +232,6 @@ margin-top:18px;
 font-size:22px;
 opacity:.9;
 }
-
-/* MOVIES */
 
 .container{
 padding:40px 25px;
@@ -348,81 +334,6 @@ background:#18284b;
 color:white;
 }
 
-/* ADMIN */
-
-.admin-panel{
-position:fixed;
-inset:0;
-background:#000000ec;
-display:none;
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:99999;
-}
-
-.admin-box{
-width:100%;
-max-width:750px;
-max-height:95vh;
-overflow:auto;
-background:#0f1729;
-padding:25px;
-border-radius:25px;
-border:2px solid gold;
-box-shadow:0 0 40px rgba(255,215,0,.3);
-}
-
-.admin-box h2{
-text-align:center;
-margin-bottom:20px;
-color:gold;
-font-size:34px;
-}
-
-.admin-box input,
-.admin-box textarea{
-width:100%;
-padding:15px;
-margin-bottom:15px;
-border:none;
-border-radius:14px;
-background:#18284b;
-color:white;
-outline:none;
-}
-
-.admin-box textarea{
-height:120px;
-resize:none;
-}
-
-.admin-box button{
-width:100%;
-padding:15px;
-border:none;
-border-radius:14px;
-background:gold;
-font-size:18px;
-font-weight:900;
-cursor:pointer;
-margin-bottom:10px;
-}
-
-.admin-item{
-background:#18284b;
-padding:15px;
-border-radius:15px;
-margin-top:10px;
-}
-
-.delete-btn{
-background:red !important;
-color:white;
-}
-
-/* FOOTER */
-
 footer{
 text-align:center;
 padding:30px;
@@ -430,8 +341,6 @@ margin-top:30px;
 background:#091120;
 border-top:1px solid rgba(255,215,0,.2);
 }
-
-/* ANIMATION */
 
 @keyframes float{
 from{
@@ -528,11 +437,7 @@ transform:translateY(30px);
 
 <div class="container">
 
-<h2 class="section-title">
-
-Filimaan Cusub
-
-</h2>
+<h2 class="section-title">Filimaan Cusub</h2>
 
 <div class="movies-grid" id="moviesGrid"></div>
 
@@ -544,47 +449,9 @@ Laacib Cinema © 2026
 
 </footer>
 
-<!-- ADMIN -->
-
-<div class="admin-panel" id="adminPanel">
-
-<div class="admin-box">
-
-<h2>Admin Panel</h2>
-
-<input type="text" id="movieName" placeholder="Magaca filimka">
-
-<input type="text" id="movieActors" placeholder="Jilayaasha">
-
-<input type="text" id="movieStars" placeholder="Qiimeynta ★★★★★">
-
-<input type="text" id="movieImage" placeholder="Link-ga sawirka">
-
-<input type="text" id="movieVideo" placeholder="Link-ga filimka">
-
-<textarea id="movieDesc" placeholder="Faahfaahinta filimka"></textarea>
-
-<button onclick="addMovie()">
-
-Ku dar Filim
-
-</button>
-
-<button onclick="closeAdmin()">
-
-Xir Panel-ka
-
-</button>
-
-<div id="adminMovies"></div>
-
-</div>
-
-</div>
-
 <script>
 
-/* GOOGLE LOGIN */
+/* GOOGLE BUTTON */
 
 const googleBtn = document.getElementById("googleBtn");
 
@@ -637,7 +504,7 @@ googleBtn.innerHTML = `
 
 /* FILIMAAN */
 
-let movies = JSON.parse(localStorage.getItem('laacib_movies')) || [
+let movies = [
 
 {
 name:'John Wick',
@@ -659,34 +526,21 @@ desc:'Musalsalka tuugada ugu caansan.'
 
 ];
 
-function saveMovies(){
-
-localStorage.setItem(
-'laacib_movies',
-JSON.stringify(movies)
-);
-
-}
-
 function renderMovies(){
 
 const grid=document.getElementById('moviesGrid');
-
-const admin=document.getElementById('adminMovies');
 
 const search=document.getElementById('searchInput')
 .value.toLowerCase();
 
 grid.innerHTML='';
 
-admin.innerHTML='';
-
 movies
 .filter(movie =>
 movie.name.toLowerCase().includes(search)
 )
 
-.forEach((movie,index)=>{
+.forEach((movie)=>{
 
 grid.innerHTML += `
 
@@ -701,9 +555,7 @@ grid.innerHTML += `
 <p><b>Jilayaasha:</b> ${movie.actors}</p>
 
 <div class="stars">
-
 ${movie.stars}
-
 </div>
 
 <p>${movie.desc}</p>
@@ -738,28 +590,7 @@ Download
 
 `;
 
-admin.innerHTML += `
-
-<div class="admin-item">
-
-<h3>${movie.name}</h3>
-
-<p>${movie.actors}</p>
-
-<button class="delete-btn"
-onclick="deleteMovie(${index})">
-
-Tirtir Filimka
-
-</button>
-
-</div>
-
-`;
-
 });
-
-saveMovies();
 
 }
 
@@ -771,114 +602,26 @@ document
 .getElementById('searchInput')
 .addEventListener('input',renderMovies);
 
-/* AUTO SAVE */
+</script>
 
-setInterval(()=>{
-
-localStorage.setItem(
-'laacib_movies',
-JSON.stringify(movies)
-);
-
-},2000);
-
-/* ADD MOVIE */
-
-function addMovie(){
-
-const name =
-document.getElementById('movieName').value;
-
-const actors =
-document.getElementById('movieActors').value;
-
-const stars =
-document.getElementById('movieStars').value;
-
-const image =
-document.getElementById('movieImage').value;
-
-const video =
-document.getElementById('movieVideo').value;
-
-const desc =
-document.getElementById('movieDesc').value;
-
-if(name===''||image===''||video===''){
-
-alert('Buuxi xogta');
-
-return;
-
-}
-
-movies.unshift({
-
-name,
-actors,
-stars,
-image,
-video,
-desc
-
-});
-
-saveMovies();
-
-renderMovies();
-
-alert('Filimka waa la daray');
-
-}
-
-/* DELETE */
-
-function deleteMovie(index){
-
-if(confirm('Ma tirtiraysaa filimkan?')){
-
-movies.splice(index,1);
-
-saveMovies();
-
-renderMovies();
-
-}
-
-}
-
-/* CLOSE ADMIN */
-
-function closeAdmin(){
-
-document
-.getElementById('adminPanel')
-.style.display='none';
-
-}
-
-/* ADMIN LINK */
-
-const hash = window.location.hash;
-
-if(hash === '#admin=IPhone3245hellofyou'){
-
-document
-.getElementById('adminPanel')
-.style.display='flex';
-
-}
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBHXDHJq6iX_wUi3B9Ggbs_YMyIPCw6fpU",
-  authDomain: "laacib-cinema.firebaseapp.com",
-  projectId: "laacib-cinema",
-  storageBucket: "laacib-cinema.firebasestorage.app",
-  messagingSenderId: "504616052691",
-  appId: "1:504616052691:web:1d432f3fa51a88f8217126"
+
+apiKey: "AIzaSyBHXDHJq6iX_wUi3B9Ggbs_YMyIPCw6fpU",
+
+authDomain: "laacib-cinema.firebaseapp.com",
+
+projectId: "laacib-cinema",
+
+storageBucket: "laacib-cinema.firebasestorage.app",
+
+messagingSenderId: "504616052691",
+
+appId: "1:504616052691:web:1d432f3fa51a88f8217126"
+
 };
 
 const app = initializeApp(firebaseConfig);
@@ -886,5 +629,6 @@ const app = initializeApp(firebaseConfig);
 console.log("Firebase Work 🔥");
 
 </script>
+
 </body>
 </html>
