@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="so">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Laacib Cinema</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050816;
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+background-image:
+radial-gradient(circle at top right,#1b2957 0%,transparent 30%),
+radial-gradient(circle at bottom left,#3d1148 0%,transparent 25%);
+}
+
+/* SCROLL */
+
+::-webkit-scrollbar{
+width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:gold;
+border-radius:20px;
+}
+
+/* HEADER */
+
+header{
+position:sticky;
+top:0;
+z-index:999;
+backdrop-filter:blur(10px);
+background:#07101fe3;
+padding:18px 25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid rgba(255,215,0,.3);
+flex-wrap:wrap;
+gap:20px;
+}
+
+/* LOGO */
+
+.logo{
+display:flex;
+align-items:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.logo-art{
+position:relative;
+width:300px;
+height:120px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.movie-text{
+display:flex;
+gap:4px;
+font-size:48px;
+font-weight:900;
+position:relative;
+z-index:5;
+letter-spacing:2px;
+}
+
+.movie-text span:nth-child(1){
+color:#ffffff;
+}
+
+.movie-text span:nth-child(2){
+color:#ff3c3c;
+}
+
+.movie-text span:nth-child(3){
+color:#ffd700;
+}
+
+.movie-text span:nth-child(4){
+color:#00d0ff;
+}
+
+.movie-text span:nth-child(5){
+color:#ffffff;
+}
+
+.movie-text span:nth-child(6){
+color:#00ff88;
+}
+
+.camera{
+position:absolute;
+font-size:42px;
+animation:float 3s infinite alternate;
+}
+
+.camera1{
+top:10px;
+left:10px;
+}
+
+.camera2{
+top:0;
+right:20px;
+}
+
+.hand{
+position:absolute;
+width:90px;
+height:2px;
+background:white;
+}
+
+.hand1{
+top:20px;
+left:0;
+transform:rotate(30deg);
+}
+
+.hand2{
+bottom:15px;
+right:0;
+transform:rotate(-20deg);
+}
+
+.logo-info h1{
+font-size:30px;
+font-weight:900;
+color:gold;
+}
+
+.logo-info p{
+font-size:13px;
+opacity:.7;
+}
+
+/* GOOGLE */
+
+.google-login{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+#googleBtn{
+display:flex;
+align-items:center;
+gap:10px;
+padding:12px 18px;
+border:none;
+border-radius:14px;
+background:white;
+color:black;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+#googleBtn:hover{
+transform:scale(1.05);
+}
+
+#googleBtn img{
+width:25px;
+height:25px;
+}
+
+/* SEARCH */
+
+.search-box input{
+width:260px;
+padding:12px 15px;
+border:none;
+border-radius:14px;
+background:#121f3f;
+color:white;
+outline:none;
+}
+
+/* HERO */
+
+.hero{
+height:430px;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+background:
+linear-gradient(to right,#000000d9,#00000092),
+url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+position:relative;
+overflow:hidden;
+}
+
+.hero::before{
+content:'';
+position:absolute;
+width:600px;
+height:600px;
+background:rgba(255,215,0,.06);
+border-radius:50%;
+filter:blur(30px);
+animation:float2 7s infinite alternate;
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+}
+
+.hero h2{
+font-size:70px;
+color:gold;
+font-weight:900;
+text-shadow:0 0 25px rgba(255,215,0,.4);
+}
+
+.hero p{
+margin-top:18px;
+font-size:22px;
+opacity:.9;
+}
+
+/* MOVIES */
+
+.container{
+padding:40px 25px;
+}
+
+.section-title{
+font-size:32px;
+margin-bottom:30px;
+color:gold;
+font-weight:800;
+}
+
+.movies-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+gap:30px;
+}
+
+.movie-card{
+background:#0f1729;
+border-radius:25px;
+overflow:hidden;
+position:relative;
+border:1px solid rgba(255,255,255,.06);
+transition:.5s;
+}
+
+.movie-card:hover{
+transform:translateY(-12px) scale(1.02);
+box-shadow:0 0 40px rgba(255,215,0,.18);
+}
+
+.movie-card img{
+width:100%;
+height:370px;
+object-fit:cover;
+}
+
+.movie-info{
+padding:20px;
+}
+
+.movie-info h3{
+font-size:24px;
+margin-bottom:10px;
+color:gold;
+}
+
+.movie-info p{
+opacity:.85;
+line-height:1.8;
+}
+
+.stars{
+margin:12px 0;
+font-size:20px;
+color:gold;
+}
+
+.actions{
+display:flex;
+gap:12px;
+margin-top:20px;
+}
+
+.actions button{
+flex:1;
+padding:13px;
+border:none;
+border-radius:14px;
+font-weight:700;
+cursor:pointer;
+transition:.3s;
+}
+
+.watch{
+background:gold;
+color:black;
+}
+
+.download{
+background:#20345d;
+color:white;
+}
+
+.actions button:hover{
+transform:scale(1.05);
+}
+
+.rating-box{
+margin-top:18px;
+}
+
+.rating-box input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#18284b;
+color:white;
+}
+
+/* ADMIN */
+
+.admin-panel{
+position:fixed;
+inset:0;
+background:#000000ec;
+display:none;
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:99999;
+}
+
+.admin-box{
+width:100%;
+max-width:750px;
+max-height:95vh;
+overflow:auto;
+background:#0f1729;
+padding:25px;
+border-radius:25px;
+border:2px solid gold;
+box-shadow:0 0 40px rgba(255,215,0,.3);
+}
+
+.admin-box h2{
+text-align:center;
+margin-bottom:20px;
+color:gold;
+font-size:34px;
+}
+
+.admin-box input,
+.admin-box textarea{
+width:100%;
+padding:15px;
+margin-bottom:15px;
+border:none;
+border-radius:14px;
+background:#18284b;
+color:white;
+outline:none;
+}
+
+.admin-box textarea{
+height:120px;
+resize:none;
+}
+
+.admin-box button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:14px;
+background:gold;
+font-size:18px;
+font-weight:900;
+cursor:pointer;
+margin-bottom:10px;
+}
+
+.admin-item{
+background:#18284b;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
+}
+
+.delete-btn{
+background:red !important;
+color:white;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:30px;
+margin-top:30px;
+background:#091120;
+border-top:1px solid rgba(255,215,0,.2);
+}
+
+/* ANIMATION */
+
+@keyframes float{
+from{
+transform:translateY(-5px);
+}
+to{
+transform:translateY(5px);
+}
+}
+
+@keyframes float2{
+from{
+transform:translateY(-30px);
+}
+to{
+transform:translateY(30px);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+<div class="logo-art">
+
+<div class="hand hand1"></div>
+
+<div class="camera camera1">🎥</div>
+
+<div class="camera camera2">📽️</div>
+
+<div class="movie-text">
+
+<span>L</span>
+<span>A</span>
+<span>A</span>
+<span>C</span>
+<span>I</span>
+<span>B</span>
+
+</div>
+
+<div class="hand hand2"></div>
+
+</div>
+
+<div class="logo-info">
+
+<h1>Laacib Cinema</h1>
+
+<p>Filimaan & Musalsallo</p>
+
+</div>
+
+</div>
+
+<div class="google-login">
+
+<button id="googleBtn">
+
+<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
+
+<span>Gal Google</span>
+
+</button>
+
+</div>
+
+<div class="search-box">
+
+<input type="text" placeholder="Raadi filim..." id="searchInput">
+
+</div>
+
+</header>
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h2>Laacib Cinema</h2>
+
+<p>Goobta ugu fiican filimada iyo musalsallada</p>
+
+</div>
+
+</section>
+
+<div class="container">
+
+<h2 class="section-title">
+
+Filimaan Cusub
+
+</h2>
+
+<div class="movies-grid" id="moviesGrid"></div>
+
+</div>
+
+<footer>
+
+Laacib Cinema © 2026
+
+</footer>
+
+<!-- ADMIN -->
+
+<div class="admin-panel" id="adminPanel">
+
+<div class="admin-box">
+
+<h2>Admin Panel</h2>
+
+<input type="text" id="movieName" placeholder="Magaca filimka">
+
+<input type="text" id="movieActors" placeholder="Jilayaasha">
+
+<input type="text" id="movieStars" placeholder="Qiimeynta ★★★★★">
+
+<input type="text" id="movieImage" placeholder="Link-ga sawirka">
+
+<input type="text" id="movieVideo" placeholder="Link-ga filimka">
+
+<textarea id="movieDesc" placeholder="Faahfaahinta filimka"></textarea>
+
+<button onclick="addMovie()">
+
+Ku dar Filim
+
+</button>
+
+<button onclick="closeAdmin()">
+
+Xir Panel-ka
+
+</button>
+
+<div id="adminMovies"></div>
+
+</div>
+
+</div>
+
+<script>
+
+/* GOOGLE LOGIN */
+
+const googleBtn = document.getElementById("googleBtn");
+
+googleBtn.onclick = () => {
+
+let user = localStorage.getItem("laacibUser");
+
+if(!user){
+
+const name = prompt("Geli magacaaga");
+
+if(name){
+
+localStorage.setItem("laacibUser",name);
+
+googleBtn.innerHTML = `
+<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
+<span>${name}</span>
+`;
+
+alert("Waad gashay");
+
+}
+
+}else{
+
+googleBtn.innerHTML = `
+<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
+<span>${user}</span>
+`;
+
+}
+
+};
+
+window.onload = ()=>{
+
+const user = localStorage.getItem("laacibUser");
+
+if(user){
+
+googleBtn.innerHTML = `
+<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
+<span>${user}</span>
+`;
+
+}
+
+};
+
+/* FILIMAAN */
+
+let movies = JSON.parse(localStorage.getItem('laacib_movies')) || [
+
+{
+name:'John Wick',
+actors:'Keanu Reeves',
+stars:'★★★★★',
+image:'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200&auto=format&fit=crop',
+video:'https://example.com',
+desc:'Filim action ah oo aad u xiiso badan.'
+},
+
+{
+name:'Money Heist',
+actors:'Professor - Tokyo',
+stars:'★★★★☆',
+image:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200&auto=format&fit=crop',
+video:'https://example.com',
+desc:'Musalsalka tuugada ugu caansan.'
+}
+
+];
+
+function saveMovies(){
+
+localStorage.setItem(
+'laacib_movies',
+JSON.stringify(movies)
+);
+
+}
+
+function renderMovies(){
+
+const grid=document.getElementById('moviesGrid');
+
+const admin=document.getElementById('adminMovies');
+
+const search=document.getElementById('searchInput')
+.value.toLowerCase();
+
+grid.innerHTML='';
+
+admin.innerHTML='';
+
+movies
+.filter(movie =>
+movie.name.toLowerCase().includes(search)
+)
+
+.forEach((movie,index)=>{
+
+grid.innerHTML += `
+
+<div class="movie-card">
+
+<img src="${movie.image}">
+
+<div class="movie-info">
+
+<h3>${movie.name}</h3>
+
+<p><b>Jilayaasha:</b> ${movie.actors}</p>
+
+<div class="stars">
+
+${movie.stars}
+
+</div>
+
+<p>${movie.desc}</p>
+
+<div class="actions">
+
+<button class="watch"
+onclick="window.open('${movie.video}')">
+
+Daawo
+
+</button>
+
+<button class="download"
+onclick="window.open('${movie.video}')">
+
+Download
+
+</button>
+
+</div>
+
+<div class="rating-box">
+
+<input placeholder="Qiimee filimkan">
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+admin.innerHTML += `
+
+<div class="admin-item">
+
+<h3>${movie.name}</h3>
+
+<p>${movie.actors}</p>
+
+<button class="delete-btn"
+onclick="deleteMovie(${index})">
+
+Tirtir Filimka
+
+</button>
+
+</div>
+
+`;
+
+});
+
+saveMovies();
+
+}
+
+renderMovies();
+
+/* SEARCH */
+
+document
+.getElementById('searchInput')
+.addEventListener('input',renderMovies);
+
+/* AUTO SAVE */
+
+setInterval(()=>{
+
+localStorage.setItem(
+'laacib_movies',
+JSON.stringify(movies)
+);
+
+},2000);
+
+/* ADD MOVIE */
+
+function addMovie(){
+
+const name =
+document.getElementById('movieName').value;
+
+const actors =
+document.getElementById('movieActors').value;
+
+const stars =
+document.getElementById('movieStars').value;
+
+const image =
+document.getElementById('movieImage').value;
+
+const video =
+document.getElementById('movieVideo').value;
+
+const desc =
+document.getElementById('movieDesc').value;
+
+if(name===''||image===''||video===''){
+
+alert('Buuxi xogta');
+
+return;
+
+}
+
+movies.unshift({
+
+name,
+actors,
+stars,
+image,
+video,
+desc
+
+});
+
+saveMovies();
+
+renderMovies();
+
+alert('Filimka waa la daray');
+
+}
+
+/* DELETE */
+
+function deleteMovie(index){
+
+if(confirm('Ma tirtiraysaa filimkan?')){
+
+movies.splice(index,1);
+
+saveMovies();
+
+renderMovies();
+
+}
+
+}
+
+/* CLOSE ADMIN */
+
+function closeAdmin(){
+
+document
+.getElementById('adminPanel')
+.style.display='none';
+
+}
+
+/* ADMIN LINK */
+
+const hash = window.location.hash;
+
+if(hash === '#admin=IPhone3245hellofyou'){
+
+document
+.getElementById('adminPanel')
+.style.display='flex';
+
+}
+
+</script>
+
+</body>
+
+                               </html>
