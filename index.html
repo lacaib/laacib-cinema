@@ -869,6 +869,61 @@ document
 
 }
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+GoogleAuthProvider,
+signInWithPopup
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+
+apiKey: "ضع apiKey هنا",
+
+authDomain: "laacib-cinema.firebaseapp.com",
+
+projectId: "laacib-cinema",
+
+storageBucket: "laacib-cinema.appspot.com",
+
+messagingSenderId: "504616052691",
+
+appId: "ضع appId هنا"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const provider = new GoogleAuthProvider();
+
+const googleBtn = document.getElementById("googleBtn");
+
+googleBtn.onclick = async () => {
+
+try {
+
+const result = await signInWithPopup(auth, provider);
+
+const user = result.user;
+
+googleBtn.innerHTML = `
+<img src="${user.photoURL}" width="25">
+<span>${user.displayName}</span>
+`;
+
+alert("Login Success 🔥");
+
+} catch(error){
+
+alert(error.message);
+
+}
+
+};
 </script>
 
 </body>
