@@ -29,8 +29,6 @@ radial-gradient(circle at top right,#1b2957 0%,transparent 30%),
 radial-gradient(circle at bottom left,#3d1148 0%,transparent 25%);
 }
 
-/* SCROLL */
-
 ::-webkit-scrollbar{
 width:8px;
 }
@@ -39,8 +37,6 @@ width:8px;
 background:gold;
 border-radius:20px;
 }
-
-/* HEADER */
 
 header{
 position:sticky;
@@ -56,8 +52,6 @@ border-bottom:1px solid rgba(255,215,0,.3);
 flex-wrap:wrap;
 gap:20px;
 }
-
-/* LOGO */
 
 .logo{
 display:flex;
@@ -85,29 +79,12 @@ z-index:5;
 letter-spacing:2px;
 }
 
-.movie-text span:nth-child(1){
-color:#ffffff;
-}
-
-.movie-text span:nth-child(2){
-color:#ff3c3c;
-}
-
-.movie-text span:nth-child(3){
-color:#ffd700;
-}
-
-.movie-text span:nth-child(4){
-color:#00d0ff;
-}
-
-.movie-text span:nth-child(5){
-color:#ffffff;
-}
-
-.movie-text span:nth-child(6){
-color:#00ff88;
-}
+.movie-text span:nth-child(1){color:#ffffff;}
+.movie-text span:nth-child(2){color:#ff3c3c;}
+.movie-text span:nth-child(3){color:#ffd700;}
+.movie-text span:nth-child(4){color:#00d0ff;}
+.movie-text span:nth-child(5){color:#ffffff;}
+.movie-text span:nth-child(6){color:#00ff88;}
 
 .camera{
 position:absolute;
@@ -155,8 +132,6 @@ font-size:13px;
 opacity:.7;
 }
 
-/* GOOGLE */
-
 .google-login{
 display:flex;
 align-items:center;
@@ -184,9 +159,8 @@ transform:scale(1.05);
 #googleBtn img{
 width:25px;
 height:25px;
+border-radius:50%;
 }
-
-/* SEARCH */
 
 .search-box input{
 width:260px;
@@ -197,8 +171,6 @@ background:#121f3f;
 color:white;
 outline:none;
 }
-
-/* HERO */
 
 .hero{
 height:430px;
@@ -245,8 +217,6 @@ font-size:22px;
 opacity:.9;
 }
 
-/* MOVIES */
-
 .container{
 padding:40px 25px;
 }
@@ -268,7 +238,6 @@ gap:30px;
 background:#0f1729;
 border-radius:25px;
 overflow:hidden;
-position:relative;
 border:1px solid rgba(255,255,255,.06);
 transition:.5s;
 }
@@ -348,8 +317,6 @@ background:#18284b;
 color:white;
 }
 
-/* ADMIN */
-
 .admin-panel{
 position:fixed;
 inset:0;
@@ -421,8 +388,6 @@ background:red !important;
 color:white;
 }
 
-/* FOOTER */
-
 footer{
 text-align:center;
 padding:30px;
@@ -430,8 +395,6 @@ margin-top:30px;
 background:#091120;
 border-top:1px solid rgba(255,215,0,.2);
 }
-
-/* ANIMATION */
 
 @keyframes float{
 from{
@@ -470,14 +433,12 @@ transform:translateY(30px);
 <div class="camera camera2">📽️</div>
 
 <div class="movie-text">
-
 <span>L</span>
 <span>A</span>
 <span>A</span>
 <span>C</span>
 <span>I</span>
 <span>B</span>
-
 </div>
 
 <div class="hand hand2"></div>
@@ -485,11 +446,8 @@ transform:translateY(30px);
 </div>
 
 <div class="logo-info">
-
 <h1>Laacib Cinema</h1>
-
 <p>Filimaan & Musalsallo</p>
-
 </div>
 
 </div>
@@ -497,19 +455,14 @@ transform:translateY(30px);
 <div class="google-login">
 
 <button id="googleBtn">
-
 <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-
 <span>Gal Google</span>
-
 </button>
 
 </div>
 
 <div class="search-box">
-
 <input type="text" placeholder="Raadi filim..." id="searchInput">
-
 </div>
 
 </header>
@@ -517,11 +470,8 @@ transform:translateY(30px);
 <section class="hero">
 
 <div class="hero-content">
-
 <h2>Laacib Cinema</h2>
-
 <p>Goobta ugu fiican filimada iyo musalsallada</p>
-
 </div>
 
 </section>
@@ -529,9 +479,7 @@ transform:translateY(30px);
 <div class="container">
 
 <h2 class="section-title">
-
 Filimaan Cusub
-
 </h2>
 
 <div class="movies-grid" id="moviesGrid"></div>
@@ -539,12 +487,8 @@ Filimaan Cusub
 </div>
 
 <footer>
-
 Laacib Cinema © 2026
-
 </footer>
-
-<!-- ADMIN -->
 
 <div class="admin-panel" id="adminPanel">
 
@@ -565,15 +509,11 @@ Laacib Cinema © 2026
 <textarea id="movieDesc" placeholder="Faahfaahinta filimka"></textarea>
 
 <button onclick="addMovie()">
-
 Ku dar Filim
-
 </button>
 
 <button onclick="closeAdmin()">
-
 Xir Panel-ka
-
 </button>
 
 <div id="adminMovies"></div>
@@ -583,59 +523,6 @@ Xir Panel-ka
 </div>
 
 <script>
-
-/* GOOGLE LOGIN */
-
-const googleBtn = document.getElementById("googleBtn");
-
-googleBtn.onclick = () => {
-
-let user = localStorage.getItem("laacibUser");
-
-if(!user){
-
-const name = prompt("Geli magacaaga");
-
-if(name){
-
-localStorage.setItem("laacibUser",name);
-
-googleBtn.innerHTML = `
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-<span>${name}</span>
-`;
-
-alert("Waad gashay");
-
-}
-
-}else{
-
-googleBtn.innerHTML = `
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-<span>${user}</span>
-`;
-
-}
-
-};
-
-window.onload = ()=>{
-
-const user = localStorage.getItem("laacibUser");
-
-if(user){
-
-googleBtn.innerHTML = `
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-<span>${user}</span>
-`;
-
-}
-
-};
-
-/* FILIMAAN */
 
 let movies = JSON.parse(localStorage.getItem('laacib_movies')) || [
 
@@ -660,25 +547,21 @@ desc:'Musalsalka tuugada ugu caansan.'
 ];
 
 function saveMovies(){
-
 localStorage.setItem(
 'laacib_movies',
 JSON.stringify(movies)
 );
-
 }
 
 function renderMovies(){
 
 const grid=document.getElementById('moviesGrid');
-
 const admin=document.getElementById('adminMovies');
 
 const search=document.getElementById('searchInput')
 .value.toLowerCase();
 
 grid.innerHTML='';
-
 admin.innerHTML='';
 
 movies
@@ -701,9 +584,7 @@ grid.innerHTML += `
 <p><b>Jilayaasha:</b> ${movie.actors}</p>
 
 <div class="stars">
-
 ${movie.stars}
-
 </div>
 
 <p>${movie.desc}</p>
@@ -712,24 +593,18 @@ ${movie.stars}
 
 <button class="watch"
 onclick="window.open('${movie.video}')">
-
 Daawo
-
 </button>
 
 <button class="download"
 onclick="window.open('${movie.video}')">
-
 Download
-
 </button>
 
 </div>
 
 <div class="rating-box">
-
 <input placeholder="Qiimee filimkan">
-
 </div>
 
 </div>
@@ -748,9 +623,7 @@ admin.innerHTML += `
 
 <button class="delete-btn"
 onclick="deleteMovie(${index})">
-
 Tirtir Filimka
-
 </button>
 
 </div>
@@ -765,24 +638,9 @@ saveMovies();
 
 renderMovies();
 
-/* SEARCH */
-
 document
 .getElementById('searchInput')
 .addEventListener('input',renderMovies);
-
-/* AUTO SAVE */
-
-setInterval(()=>{
-
-localStorage.setItem(
-'laacib_movies',
-JSON.stringify(movies)
-);
-
-},2000);
-
-/* ADD MOVIE */
 
 function addMovie(){
 
@@ -805,33 +663,25 @@ const desc =
 document.getElementById('movieDesc').value;
 
 if(name===''||image===''||video===''){
-
 alert('Buuxi xogta');
-
 return;
-
 }
 
 movies.unshift({
-
 name,
 actors,
 stars,
 image,
 video,
 desc
-
 });
 
 saveMovies();
-
 renderMovies();
 
 alert('Filimka waa la daray');
 
 }
-
-/* DELETE */
 
 function deleteMovie(index){
 
@@ -847,8 +697,6 @@ renderMovies();
 
 }
 
-/* CLOSE ADMIN */
-
 function closeAdmin(){
 
 document
@@ -856,8 +704,6 @@ document
 .style.display='none';
 
 }
-
-/* ADMIN LINK */
 
 const hash = window.location.hash;
 
@@ -869,7 +715,10 @@ document
 
 }
 
+</script>
+
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
@@ -880,7 +729,7 @@ signInWithPopup
 
 const firebaseConfig = {
 
-apiKey: "ضع apiKey هنا",
+apiKey: "AIzaSyBHXDHJq6iX_wUi3B9Ggbs_YMyIPCw6fpU",
 
 authDomain: "laacib-cinema.firebaseapp.com",
 
@@ -890,7 +739,7 @@ storageBucket: "laacib-cinema.appspot.com",
 
 messagingSenderId: "504616052691",
 
-appId: "ضع appId هنا"
+appId: "1:504616052691:web:1d432f3fa51a88f8217126"
 
 };
 
@@ -924,8 +773,8 @@ alert(error.message);
 }
 
 };
+
 </script>
 
 </body>
-
-                               </html>
+</html>
