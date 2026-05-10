@@ -1,7 +1,5 @@
 const ADMIN_PASSWORD = "IPhone33@foyj45@^";
 
-/* GOOGLE BUTTON */
-
 const googleBtn = document.getElementById("googleBtn");
 
 googleBtn.onclick = () => {
@@ -49,9 +47,31 @@ googleBtn.innerHTML = `
 
 }
 
+renderMovies();
+
 };
 
-let movies = JSON.parse(localStorage.getItem("movies")) || [];
+let movies = JSON.parse(localStorage.getItem("movies")) || [
+
+{
+name:'John Wick',
+actors:'Keanu Reeves',
+stars:'★★★★★',
+image:'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200&auto=format&fit=crop',
+video:'https://example.com',
+desc:'Filim action ah oo aad u xiiso badan.'
+},
+
+{
+name:'Money Heist',
+actors:'Professor - Tokyo',
+stars:'★★★★☆',
+image:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1200&auto=format&fit=crop',
+video:'https://example.com',
+desc:'Musalsalka tuugada ugu caansan.'
+}
+
+];
 
 function saveMovies(){
 
@@ -105,6 +125,12 @@ Download
 
 </div>
 
+<div class="rating-box">
+
+<input placeholder="Qiimee filimkan">
+
+</div>
+
 </div>
 
 </div>
@@ -115,15 +141,11 @@ Download
 
 }
 
-renderMovies();
-
 document
 .getElementById('searchInput')
 .addEventListener('input',renderMovies);
 
-/* ADMIN LOGIN */
-
-if(window.location.href === "https://lacaib.github.io/laacib-cinema/admin"){
+if(window.location.hash === "#admin"){
 
 const password = prompt("Enter Admin Password");
 
@@ -159,13 +181,23 @@ const video = document.getElementById("movieVideo").value;
 
 const desc = document.getElementById("movieDesc").value;
 
+if(name==="" || image==="" || video===""){
+
+alert("Fill all inputs");
+
+return;
+
+}
+
 movies.unshift({
+
 name,
 actors,
 stars,
 image,
 video,
 desc
+
 });
 
 saveMovies();
