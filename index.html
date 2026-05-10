@@ -446,7 +446,19 @@ window.location.href =
 
 let movies = JSON.parse(
 localStorage.getItem("movies")
-) || [];
+) || [
+
+{
+title:"Bile alta",
+desc:"Best Movie",
+rating:"9.1",
+year:"2026",
+image:"https://i.imgur.com/yhQ5XxY.jpeg",
+video:"https://www.youtube.com/embed/_zw_DKOiXcY",
+download:"https://youtu.be/_zw_DKOiXcY?si=hTMipxyfI3LS98ud"
+}
+
+];
 
 
 // SAVE
@@ -625,7 +637,7 @@ saveMovies();
 
 loadMovies();
 
-alert("Filimka Waa La Daray");
+alert("Filimka Waa Lagu Daray");
 
 document.getElementById("movieTitle").value = "";
 document.getElementById("movieDesc").value = "";
