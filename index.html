@@ -28,7 +28,7 @@ header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 25px;
+padding:15px 20px;
 background:#0f172a;
 position:sticky;
 top:0;
@@ -44,11 +44,10 @@ gap:15px;
 .logo img{
 width:60px;
 height:60px;
-border-radius:50%;
 }
 
 .logo h1{
-font-size:28px;
+font-size:32px;
 color:gold;
 }
 
@@ -61,13 +60,13 @@ padding:12px;
 border:none;
 border-radius:12px;
 outline:none;
-width:240px;
+width:220px;
 }
 
 .hero{
 height:420px;
 background:
-linear-gradient(to right,#000000b7,#0000008e),
+linear-gradient(to right,#000000c0,#00000080),
 url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop');
 
 background-size:cover;
@@ -87,7 +86,7 @@ text-shadow:0 0 25px gold;
 }
 
 .hero p{
-font-size:24px;
+font-size:25px;
 margin-top:15px;
 }
 
@@ -96,32 +95,51 @@ padding:40px 25px;
 }
 
 .section-title{
-font-size:35px;
+font-size:45px;
 margin-bottom:25px;
 color:gold;
 }
 
 .movies-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:25px;
 }
 
 .movie-card{
 background:#111827;
-border-radius:20px;
+border-radius:22px;
 overflow:hidden;
 transition:.4s;
+position:relative;
+box-shadow:0 0 25px rgba(0,0,0,.4);
 }
 
 .movie-card:hover{
 transform:translateY(-10px);
 }
 
-.movie-card img{
+.movie-image{
+position:relative;
+}
+
+.movie-image img{
 width:100%;
-height:360px;
+height:380px;
 object-fit:cover;
+}
+
+.movie-year{
+position:absolute;
+top:15px;
+left:15px;
+background:gold;
+color:black;
+padding:8px 14px;
+border-radius:30px;
+font-weight:bold;
+font-size:15px;
+box-shadow:0 0 10px rgba(0,0,0,.4);
 }
 
 .movie-info{
@@ -129,31 +147,32 @@ padding:20px;
 }
 
 .movie-info h3{
-color:gold;
+font-size:30px;
 margin-bottom:10px;
-font-size:25px;
+color:gold;
 }
 
 .movie-info p{
-opacity:.8;
+opacity:.85;
 line-height:1.7;
-margin-bottom:10px;
+margin-bottom:15px;
 }
 
 .rating{
-color:gold;
 font-size:20px;
+color:gold;
 margin-bottom:15px;
 }
 
 .watch-btn,
 .download-btn,
+.add-btn,
 .delete-btn{
 width:100%;
-padding:13px;
+padding:14px;
 border:none;
 border-radius:12px;
-font-size:17px;
+font-size:18px;
 font-weight:bold;
 cursor:pointer;
 margin-top:10px;
@@ -172,6 +191,11 @@ display:block;
 text-align:center;
 }
 
+.add-btn{
+background:#16a34a;
+color:white;
+}
+
 .delete-btn{
 background:red;
 color:white;
@@ -181,32 +205,57 @@ footer{
 background:#0f172a;
 padding:25px;
 text-align:center;
-margin-top:40px;
+margin-top:50px;
+font-size:22px;
 }
 
-.admin-panel{
+.video-modal{
 display:none;
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:#000000e0;
-overflow:auto;
+background:#000000f0;
+justify-content:center;
+align-items:center;
 padding:20px;
 z-index:99999;
+}
+
+.video-box{
+width:100%;
+max-width:900px;
+}
+
+.video-box iframe{
+width:100%;
+height:500px;
+border:none;
+border-radius:20px;
+}
+
+.close-video{
+width:100%;
+padding:15px;
+margin-top:15px;
+background:red;
+color:white;
+border:none;
+border-radius:12px;
+font-size:18px;
+cursor:pointer;
 }
 
 .admin-box{
 background:#111827;
 padding:25px;
 border-radius:20px;
-max-width:500px;
-margin:auto;
+margin-bottom:40px;
+display:none;
 }
 
 .admin-box h2{
-text-align:center;
 margin-bottom:20px;
 color:gold;
 }
@@ -227,81 +276,27 @@ height:120px;
 resize:none;
 }
 
-.admin-box button{
-width:100%;
-padding:14px;
-margin-top:15px;
-border:none;
-border-radius:12px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.add-btn{
-background:#2563eb;
-color:white;
-}
-
-.close-btn{
-background:red;
-color:white;
-}
-
-.video-modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000000f0;
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:999999;
-}
-
-.video-box{
-width:100%;
-max-width:900px;
-}
-
-.video-box iframe{
-width:100%;
-height:500px;
-border:none;
-border-radius:20px;
-}
-
-.close-video{
-width:100%;
-padding:14px;
-margin-top:15px;
-background:red;
-color:white;
-border:none;
-border-radius:12px;
-font-size:18px;
-cursor:pointer;
-}
-
 @media(max-width:700px){
 
+header{
+flex-direction:column;
+gap:15px;
+}
+
 .hero h2{
-font-size:45px;
+font-size:50px;
 }
 
 .hero p{
-font-size:18px;
+font-size:20px;
 }
 
 .search-box input{
-width:160px;
+width:100%;
 }
 
 .video-box iframe{
-height:240px;
+height:250px;
 }
 
 }
@@ -350,8 +345,38 @@ height:240px;
 
 <div class="container">
 
+<!-- ADMIN -->
+
+<div class="admin-box" id="adminBox">
+
+<h2>Admin Panel</h2>
+
+<input type="text" id="movieTitle" placeholder="Magaca Filimka">
+
+<textarea id="movieDesc" placeholder="Sharaxaad"></textarea>
+
+<input type="text" id="movieRating" placeholder="Rating ★★★★★">
+
+<input type="text" id="movieYear" placeholder="Taariikhda Soo Saarista">
+
+<input type="text" id="movieImage" placeholder="Link Sawirka">
+
+<input type="text" id="movieVideo" placeholder="Link YouTube">
+
+<input type="text" id="movieDownload" placeholder="Link Download">
+
+<button class="add-btn" onclick="addMovie()">
+
+Ku Dar Filim
+
+</button>
+
+</div>
+
 <h2 class="section-title">
+
 Aflaanta Cusub
+
 </h2>
 
 <div class="movies-grid" id="moviesGrid"></div>
@@ -364,38 +389,6 @@ Laacib Cinema © 2026
 
 </footer>
 
-<!-- ADMIN -->
-
-<div class="admin-panel" id="adminPanel">
-
-<div class="admin-box">
-
-<h2>Admin Panel</h2>
-
-<input type="text" id="movieTitle" placeholder="Magaca Filimka">
-
-<textarea id="movieDesc" placeholder="Sharaxaad"></textarea>
-
-<input type="text" id="movieRating" placeholder="Rating ★★★★★">
-
-<input type="file" id="movieImage" accept="image/*">
-
-<input type="text" id="movieVideo" placeholder="Link-ga YouTube">
-
-<input type="text" id="movieDownload" placeholder="Link-ga Download">
-
-<button class="add-btn" onclick="addMovie()">
-Ku Dar Filim
-</button>
-
-<button class="close-btn" onclick="closeAdmin()">
-Xir
-</button>
-
-</div>
-
-</div>
-
 <!-- VIDEO -->
 
 <div class="video-modal" id="videoModal">
@@ -405,7 +398,9 @@ Xir
 <iframe id="videoFrame" allowfullscreen></iframe>
 
 <button class="close-video" onclick="closeVideo()">
+
 Xir
+
 </button>
 
 </div>
@@ -420,8 +415,8 @@ const ADMIN_PASSWORD =
 const moviesGrid =
 document.getElementById("moviesGrid");
 
-const adminPanel =
-document.getElementById("adminPanel");
+const adminBox =
+document.getElementById("adminBox");
 
 
 // ADMIN LOGIN
@@ -433,7 +428,7 @@ prompt("Geli Password-ka Admin");
 
 if(pass === ADMIN_PASSWORD){
 
-adminPanel.style.display = "block";
+adminBox.style.display = "block";
 
 }else{
 
@@ -449,9 +444,8 @@ window.location.href =
 
 // STORAGE
 
-let movies =
-JSON.parse(
-localStorage.getItem("laacib_movies")
+let movies = JSON.parse(
+localStorage.getItem("movies")
 ) || [];
 
 
@@ -460,16 +454,16 @@ localStorage.getItem("laacib_movies")
 function saveMovies(){
 
 localStorage.setItem(
-"laacib_movies",
+"movies",
 JSON.stringify(movies)
 );
 
 }
 
 
-// YOUTUBE EMBED
+// CONVERT YOUTUBE
 
-function youtubeEmbed(url){
+function convertYoutube(url){
 
 if(url.includes("watch?v=")){
 
@@ -504,7 +498,17 @@ moviesGrid.innerHTML += `
 
 <div class="movie-card">
 
+<div class="movie-image">
+
 <img src="${movie.image}">
+
+<div class="movie-year">
+
+📅 ${movie.year}
+
+</div>
+
+</div>
 
 <div class="movie-info">
 
@@ -520,7 +524,7 @@ moviesGrid.innerHTML += `
 
 <button
 class="watch-btn"
-onclick="watchMovie('${youtubeEmbed(movie.video)}')">
+onclick="watchMovie('${movie.video}')">
 
 Daawo Filim
 
@@ -544,7 +548,7 @@ window.location.hash === "#admin"
 class="delete-btn"
 onclick="deleteMovie(${index})">
 
-Tirtir
+Tirtir Filim
 
 </button>
 `
@@ -579,18 +583,23 @@ document.getElementById("movieDesc").value;
 const rating =
 document.getElementById("movieRating").value;
 
-const imageFile =
-document.getElementById("movieImage").files[0];
+const year =
+document.getElementById("movieYear").value;
+
+const image =
+document.getElementById("movieImage").value;
 
 const video =
-document.getElementById("movieVideo").value;
+convertYoutube(
+document.getElementById("movieVideo").value
+);
 
 const download =
 document.getElementById("movieDownload").value;
 
 if(
 !title ||
-!imageFile ||
+!image ||
 !video
 ){
 
@@ -600,21 +609,12 @@ return;
 
 }
 
-const reader =
-new FileReader();
-
-reader.readAsDataURL(imageFile);
-
-reader.onload = function(){
-
-const image =
-reader.result;
-
 movies.unshift({
 
 title,
 desc,
 rating,
+year,
 image,
 video,
 download
@@ -628,18 +628,12 @@ loadMovies();
 alert("Filimka Waa La Daray");
 
 document.getElementById("movieTitle").value = "";
-
 document.getElementById("movieDesc").value = "";
-
 document.getElementById("movieRating").value = "";
-
+document.getElementById("movieYear").value = "";
 document.getElementById("movieImage").value = "";
-
 document.getElementById("movieVideo").value = "";
-
 document.getElementById("movieDownload").value = "";
-
-};
 
 };
 
@@ -658,6 +652,8 @@ movies.splice(index,1);
 saveMovies();
 
 loadMovies();
+
+alert("Filimka Waa La Tirtiray");
 
 };
 
@@ -692,18 +688,6 @@ document.getElementById(
 };
 
 
-// CLOSE ADMIN
-
-window.closeAdmin = function(){
-
-adminPanel.style.display = "none";
-
-window.location.href =
-"https://lacaib.github.io/laacib-cinema/";
-
-};
-
-
 // SEARCH
 
 document
@@ -716,7 +700,7 @@ e.target.value.toLowerCase();
 const cards =
 document.querySelectorAll(".movie-card");
 
-cards.forEach((card)=>{
+cards.forEach(card=>{
 
 const title =
 card.querySelector("h3")
