@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="so">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +10,7 @@
 <link rel="stylesheet" href="style.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -89,8 +91,6 @@
 Laacib Cinema © 2026
 </footer>
 
-<!-- ADMIN PANEL -->
-
 <div id="adminPanel">
 
 <div class="admin-box">
@@ -107,6 +107,8 @@ Laacib Cinema © 2026
 
 <input type="text" id="movieVideo" placeholder="Video URL">
 
+<input type="file" id="movieImageFile" accept="image/*">
+
 <textarea id="movieDesc" placeholder="Description"></textarea>
 
 <button class="add-btn" onclick="addMovie()">
@@ -121,9 +123,9 @@ Close
 
 </div>
 
-<script src="script.js"></script>
-
 <script type="module" src="firebase.js"></script>
+
+<script src="script.js"></script>
 
 </body>
 </html>
