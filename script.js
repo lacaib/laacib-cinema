@@ -13,13 +13,7 @@ deleteDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-// ================= PASSWORD =================
-
 const ADMIN_PASSWORD = "IPHONE33@FOYJ45@";
-
-
-// ================= ELEMENTS =================
 
 const moviesGrid =
 document.getElementById("moviesGrid");
@@ -30,11 +24,8 @@ document.getElementById("deleteMoviesBox");
 const googleBtn =
 document.getElementById("googleBtn");
 
-const adminBtn =
-document.getElementById("adminBtn");
 
-
-// ================= GOOGLE LOGIN =================
+// GOOGLE LOGIN
 
 googleBtn.onclick = async ()=>{
 
@@ -43,19 +34,10 @@ try{
 const result =
 await signInWithPopup(auth,provider);
 
-const user = result.user;
-
 googleBtn.innerHTML =
-user.displayName;
-
-localStorage.setItem(
-"userName",
-user.displayName
-);
+result.user.displayName;
 
 }catch(err){
-
-console.log(err);
 
 alert("Cilad Login");
 
@@ -64,9 +46,9 @@ alert("Cilad Login");
 };
 
 
-// ================= ADMIN =================
+// ADMIN LOGIN
 
-adminBtn.onclick = ()=>{
+if(window.location.hash === "#admin"){
 
 const password =
 prompt("Geli Password-ka Admin");
@@ -83,10 +65,10 @@ alert("Password Qalad");
 
 }
 
-};
+}
 
 
-// ================= CLOSE ADMIN =================
+// CLOSE ADMIN
 
 window.closeAdmin = ()=>{
 
@@ -97,7 +79,7 @@ document.getElementById(
 };
 
 
-// ================= LOAD MOVIES =================
+// LOAD MOVIES
 
 async function loadMovies(){
 
@@ -139,16 +121,12 @@ ${movie.stars}
 ${movie.desc}
 </p>
 
-<div class="actions">
-
 <button class="watch"
 onclick="window.open('${movie.video}')">
 
 Daawo Filimka
 
 </button>
-
-</div>
 
 </div>
 
@@ -177,7 +155,7 @@ Tirtir
 }
 
 
-// ================= ADD MOVIE =================
+// ADD MOVIE
 
 window.addMovie = async ()=>{
 
@@ -205,7 +183,7 @@ if(
 !video
 ){
 
-alert("Fadlan buuxi meelaha bannaan");
+alert("Buuxi meelaha bannaan");
 
 return;
 
@@ -242,12 +220,12 @@ loadMovies();
 };
 
 
-// ================= DELETE MOVIE =================
+// DELETE MOVIE
 
 window.deleteMovie = async(id)=>{
 
 const ask =
-confirm("Ma rabtaa inaad tirtirto filimkan?");
+confirm("Ma tirtiraysaa filimkan?");
 
 if(!ask) return;
 
@@ -262,27 +240,10 @@ loadMovies();
 };
 
 
-// ================= START =================
+// START
 
 window.onload = ()=>{
 
 loadMovies();
 
-const user =
-localStorage.getItem("userName");
-
-if(user){
-
-googleBtn.innerHTML = user;
-
-}
-
 };
-
-
-// ================= WEBSITE =================
-
-console.log(
-"Website:",
-"https://lacaib.github.io/laacib-cinema/"
-);
