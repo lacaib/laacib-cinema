@@ -1,117 +1,90 @@
-import {
-db,
-auth,
-provider,
-signInWithPopup,
-storage
-} from "./firebase.js";
+import { db } from "./firebase.js";
 
 import {
 collection,
 addDoc,
-getDocs,
-deleteDoc,
-doc
+getDocs
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import {
-ref,
-uploadBytes,
-getDownloadURL
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+const moviesGrid = document.getElementById("moviesGrid");
 
-const ADMIN_PASSWORD = "IPHONE33@FOYJ45@";
+const ADMIN_PASSWORD = "12345";
 
-const moviesGrid =
-document.getElementById("moviesGrid");
+function youtubeEmbed(url){
 
-const deleteMoviesBox =
-document.getElementById("deleteMoviesBox");
+if(url.includes("watch?v=")){
 
-const googleBtn =
-document.getElementById("googleBtn");
-
-
-// GOOGLE LOGIN
-
-googleBtn.onclick = async ()=>{
-
-try{
-
-const result =
-await signInWithPopup(auth,provider);
-
-googleBtn.innerHTML =
-result.user.displayName;
-
-}catch(err){
-
-alert("Cilad Login");
+return url.replace("watch?v=","embed/");
 
 }
 
-};
+if(url.includes("youtu.be/")){
 
-
-// ADMIN LOGIN
-
-if(
-window.location.href.includes("#admin")
-){
-
-const password =
-prompt("Geli Password-ka Admin");
-
-if(password === ADMIN_PASSWORD){
-
-document.getElementById(
-"adminPanel"
-).style.display = "flex";
-
-}else{
-
-alert("Password Qalad");
-
-window.location.hash = "";
+return "https://www.youtube.com/embed/" +
+url.split("youtu.be/")[1];
 
 }
 
+return url;
+
 }
 
+async function addMovie(){
 
-// CLOSE ADMIN
+const title =
+document.getElementById("movieTitle").value;
 
-window.closeAdmin = ()=>{
+const desc =
+document.getElementById("movieDesc").value;
 
-document.getElementById(
-"adminPanel"
-).style.display = "none";
+const rating =
+document.getElementById("movieRating").value;
 
-window.location.hash = "";
+const image =
+document.getElementById("movieImage").value;
 
-};
+const video =
+document.getElementById("movieVideo").value;
 
+const download =
+document.getElementById("movieDownload").value;
 
-// LOAD MOVIES
+if(!title || !image || !video){
+
+alert("Buuxi Xogta");
+
+return;
+
+}
+
+await addDoc(collection(db,"movies"),{
+
+title,
+desc,
+rating,
+image,
+video,
+download
+
+});
+
+alert("Filimka Waa La Daray");
+
+location.reload();
+
+}
 
 async function loadMovies(){
 
 moviesGrid.innerHTML = "";
 
-deleteMoviesBox.innerHTML = "";
-
 const querySnapshot =
-await getDocs(
-collection(db,"movies")
-);
+await getDocs(collection(db,"movies"));
 
-querySnapshot.forEach((docSnap)=>{
+querySnapshot.forEach((doc)=>{
 
-const movie = docSnap.data();
-
-const id = docSnap.id;
+const movie = doc.data();
 
 moviesGrid.innerHTML += `
 
@@ -121,34 +94,27 @@ moviesGrid.innerHTML += `
 
 <div class="movie-info">
 
-<h3>${movie.name}</h3>
+<h3>${movie.title}</h3>
 
-<p>
-<b>Jilayaasha:</b>
-${movie.actors}
-</p>
+<p>${movie.desc}</p>
 
-<div class="stars">
-${movie.stars}
+<div class="rating">
+⭐ ${movie.rating}
 </div>
 
-<p>
-${movie.desc}
-</p>
+<a href="#"
+class="watch-btn"
+onclick="watchMovie('${youtubeEmbed(movie.video)}')">
 
-<video controls width="100%" style="margin-top:15px;border-radius:12px;">
+Daawo Filim
 
-<source src="${movie.video}" type="video/mp4">
+</a>
 
-</video>
+<a href="${movie.download}"
+target="_blank"
+class="download-btn">
 
-<a href="${movie.video}" download>
-
-<button class="watch">
-
-Download Film
-
-</button>
+Download
 
 </a>
 
@@ -158,131 +124,81 @@ Download Film
 
 `;
 
-deleteMoviesBox.innerHTML += `
-
-<div class="delete-item">
-
-${movie.name}
-
-<button onclick="deleteMovie('${id}')">
-
-Tirtir
-
-</button>
-
-</div>
-
-`;
-
 });
 
 }
 
+window.watchMovie = function(link){
 
-// ADD MOVIE
+document.getElementById("videoModal").style.display =
+"flex";
 
-window.addMovie = async ()=>{
-
-const name =
-document.getElementById("movieName").value;
-
-const actors =
-document.getElementById("movieActors").value;
-
-const stars =
-document.getElementById("movieStars").value;
-
-const desc =
-document.getElementById("movieDesc").value;
-
-const imageFile =
-document.getElementById("movieImage").files[0];
-
-const video =
-document.getElementById("movieVideo").value;
-
-if(
-!name ||
-!imageFile ||
-!video
-){
-
-alert("Buuxi meelaha bannaan");
-
-return;
+document.getElementById("videoFrame").src = link;
 
 }
 
-try{
+window.closeVideo = function(){
 
-alert("Sawirka Waa La Upload Gareynayaa...");
+document.getElementById("videoModal").style.display =
+"none";
 
-const imageRef = ref(
-storage,
-"movies/" + Date.now() + imageFile.name
-);
-
-await uploadBytes(
-imageRef,
-imageFile
-);
-
-const imageURL =
-await getDownloadURL(imageRef);
-
-await addDoc(
-collection(db,"movies"),
-{
-name,
-actors,
-stars,
-desc,
-image:imageURL,
-video
-}
-);
-
-alert("Filimka Waa La Daray");
-
-closeAdmin();
-
-loadMovies();
-
-}catch(err){
-
-console.log(err);
-
-alert("Firebase Error: " + err.message);
+document.getElementById("videoFrame").src = "";
 
 }
 
-};
+window.closeAdmin = function(){
 
+document.getElementById("adminPanel").style.display =
+"none";
 
-// DELETE MOVIE
+}
 
-window.deleteMovie = async(id)=>{
+const params =
+new URLSearchParams(window.location.search);
 
-const ask =
-confirm("Ma tirtiraysaa filimkan?");
+if(params.get("admin")==="true"){
 
-if(!ask) return;
+const pass =
+prompt("Geli Password-ka Admin");
 
-await deleteDoc(
-doc(db,"movies",id)
-);
+if(pass===ADMIN_PASSWORD){
 
-alert("Filimka Waa La Tirtiray");
+document.getElementById("adminPanel").style.display =
+"block";
+
+}else{
+
+alert("Password Khaldan");
+
+}
+
+}
+
+window.addMovie = addMovie;
 
 loadMovies();
 
-};
+document.getElementById("searchInput")
+.addEventListener("input",(e)=>{
 
+const value =
+e.target.value.toLowerCase();
 
-// START
+const cards =
+document.querySelectorAll(".movie-card");
 
-window.onload = ()=>{
+cards.forEach(card=>{
 
-loadMovies();
+const title =
+card.querySelector("h3")
+.innerText
+.toLowerCase();
 
-};
+card.style.display =
+title.includes(value)
+? "block"
+: "none";
+
+});
+
+});
