@@ -13,13 +13,7 @@ deleteDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-
-// ================= PASSWORD =================
-
 const ADMIN_PASSWORD = "IPHONE33@FOYJ45@";
-
-
-// ================= ELEMENTS =================
 
 const moviesGrid =
 document.getElementById("moviesGrid");
@@ -31,7 +25,7 @@ const googleBtn =
 document.getElementById("googleBtn");
 
 
-// ================= GOOGLE LOGIN =================
+// GOOGLE LOGIN
 
 googleBtn.onclick = async ()=>{
 
@@ -61,7 +55,7 @@ alert("Cilad Login");
 };
 
 
-// ================= ADMIN LOGIN =================
+// ADMIN LOGIN
 
 if(window.location.hash === "#admin"){
 
@@ -83,7 +77,7 @@ alert("Password Qalad");
 }
 
 
-// ================= CLOSE ADMIN =================
+// CLOSE ADMIN
 
 window.closeAdmin = ()=>{
 
@@ -94,7 +88,7 @@ document.getElementById(
 };
 
 
-// ================= LOAD MOVIES =================
+// LOAD MOVIES
 
 async function loadMovies(){
 
@@ -154,9 +148,7 @@ allowfullscreen>
 target="_blank">
 
 <button class="watch-btn">
-
-Daawo Filimka
-
+Daawo
 </button>
 
 </a>
@@ -166,9 +158,7 @@ download
 target="_blank">
 
 <button class="download-btn">
-
-Soo Deji Filimka
-
+Soo Deji
 </button>
 
 </a>
@@ -210,7 +200,7 @@ alert("Cilad Soo Qaadista Filimada");
 }
 
 
-// ================= ADD MOVIE =================
+// ADD MOVIE
 
 window.addMovie = async ()=>{
 
@@ -271,19 +261,7 @@ createdAt:Date.now()
 }
 );
 
-alert("Filimka Waa La Daray ✅");
-
-document.getElementById("movieName").value = "";
-
-document.getElementById("movieActors").value = "";
-
-document.getElementById("movieStars").value = "";
-
-document.getElementById("movieDesc").value = "";
-
-document.getElementById("movieImage").value = "";
-
-document.getElementById("movieVideo").value = "";
+alert("Filimka Waa La Daray");
 
 closeAdmin();
 
@@ -310,7 +288,7 @@ alert("Qalad Ayaa Dhacay");
 };
 
 
-// ================= DELETE MOVIE =================
+// DELETE MOVIE
 
 window.deleteMovie = async(id)=>{
 
@@ -340,7 +318,7 @@ alert("Cilad Tirtirka Filimka");
 };
 
 
-// ================= START =================
+// START
 
 window.onload = ()=>{
 
@@ -356,11 +334,3 @@ googleBtn.innerHTML = user;
 }
 
 };
-
-
-// ================= WEBSITE =================
-
-console.log(
-"Website:",
-"https://lacaib.github.io/laacib-cinema/"
-);
