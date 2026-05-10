@@ -3,48 +3,25 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
 getFirestore
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-import {
-getAuth,
-GoogleAuthProvider,
-signInWithPopup
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-import {
-getStorage
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
 
-apiKey: "AIzaSyBHXDHJq6iX_wUi3B9Ggbs_YMyIPCw6fpU",
+apiKey: "YOUR_API_KEY",
 
-authDomain: "laacib-cinema.firebaseapp.com",
+authDomain: "YOUR_AUTH_DOMAIN",
 
-projectId: "laacib-cinema",
+projectId: "YOUR_PROJECT_ID",
 
-storageBucket: "laacib-cinema.firebasestorage.app",
+storageBucket: "YOUR_STORAGE_BUCKET",
 
-messagingSenderId: "504616052691",
+messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
 
-appId: "1:504616052691:web:1d432f3fa51a88f8217126"
+appId: "YOUR_APP_ID"
 
 };
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
-
-const auth = getAuth(app);
-
-const provider = new GoogleAuthProvider();
-
-const storage = getStorage(app);
-
-export {
-db,
-auth,
-provider,
-signInWithPopup,
-storage
-};
+export const db = getFirestore(app);
