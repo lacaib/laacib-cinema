@@ -1,14 +1,3 @@
-import { db } from "./firebase.js";
-
-import {
-collection,
-addDoc,
-getDocs,
-deleteDoc,
-doc
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
 const moviesGrid =
 document.getElementById("moviesGrid");
 
@@ -19,9 +8,9 @@ const ADMIN_PASSWORD =
 "IPHONE33@FOYJ45@";
 
 
-// =========================
-// ADMIN LOGIN
-// =========================
+// ===================
+// ADMIN
+// ===================
 
 if(window.location.hash === "#admin"){
 
@@ -44,9 +33,33 @@ window.location.href =
 }
 
 
-// =========================
+// ===================
+// MOVIES STORAGE
+// ===================
+
+let movies =
+JSON.parse(
+localStorage.getItem("laacib_movies")
+) || [];
+
+
+// ===================
+// SAVE MOVIES
+// ===================
+
+function saveMovies(){
+
+localStorage.setItem(
+"laacib_movies",
+JSON.stringify(movies)
+);
+
+}
+
+
+// ===================
 // YOUTUBE EMBED
-// =========================
+// ===================
 
 function youtubeEmbed(url){
 
@@ -71,11 +84,95 @@ return url;
 }
 
 
-// =========================
-// ADD MOVIE
-// =========================
+// ===================
+// LOAD MOVIES
+// ===================
 
-window.addMovie = async function(){
+function loadMovies(){
+
+moviesGrid.innerHTML = "";
+
+movies.forEach((movie,index)=>{
+
+moviesGrid.innerHTML += `
+
+<div class="movie-card">
+
+<img src="${movie.image}">
+
+<div class="movie-info">
+
+<h3>${movie.title}</h3>
+
+<p>${movie.desc}</p>
+
+<div class="rating">
+⭐ ${movie.rating}
+</div>
+
+<button
+class="watch-btn"
+onclick="watchMovie('${youtubeEmbed(movie.video)}')">
+
+Daawo Filim
+
+</button>
+
+<a
+href="${movie.download}"
+target="_blank"
+class="download-btn">
+
+Download
+
+</a>
+
+${
+window.location.hash === "#admin"
+?
+
+`
+<button
+class="delete-btn"
+onclick="deleteMovie(${index})"
+style="
+background:red;
+color:white;
+padding:10px;
+width:100%;
+border:none;
+border-radius:10px;
+margin-top:10px;
+cursor:pointer;
+">
+
+Tirtir
+
+</button>
+`
+
+:
+
+""
+
+}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+// ===================
+// ADD MOVIE
+// ===================
+
+window.addMovie = function(){
 
 const title =
 document.getElementById("movieTitle").value;
@@ -107,19 +204,20 @@ return;
 
 }
 
-try{
+movies.unshift({
 
-await addDoc(
-collection(db,"movies"),
-{
 title,
 desc,
 rating,
 image,
 video,
 download
-}
-);
+
+});
+
+saveMovies();
+
+loadMovies();
 
 alert("Filimka Waa La Daray");
 
@@ -130,137 +228,32 @@ document.getElementById("movieImage").value = "";
 document.getElementById("movieVideo").value = "";
 document.getElementById("movieDownload").value = "";
 
-loadMovies();
-
-}catch(err){
-
-console.log(err);
-
-alert("Firebase Error");
-
-}
-
 };
 
 
-// =========================
-// LOAD MOVIES
-// =========================
-
-async function loadMovies(){
-
-moviesGrid.innerHTML = "";
-
-const querySnapshot =
-await getDocs(
-collection(db,"movies")
-);
-
-querySnapshot.forEach((docSnap)=>{
-
-const movie = docSnap.data();
-
-const id = docSnap.id;
-
-moviesGrid.innerHTML += `
-
-<div class="movie-card">
-
-<img src="${movie.image}">
-
-<div class="movie-info">
-
-<h3>${movie.title}</h3>
-
-<p>${movie.desc}</p>
-
-<div class="rating">
-⭐ ${movie.rating || "5"}
-</div>
-
-<button
-class="watch-btn"
-onclick="watchMovie('${youtubeEmbed(movie.video)}')">
-
-Daawo Filim
-
-</button>
-
-<a
-href="${movie.download || movie.video}"
-target="_blank"
-class="download-btn">
-
-Download
-
-</a>
-
-${
-window.location.hash === "#admin"
-?
-
-`
-<button
-class="delete-btn"
-onclick="deleteMovie('${id}')">
-
-Tirtir
-
-</button>
-`
-
-:
-
-""
-
-}
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-// =========================
+// ===================
 // DELETE MOVIE
-// =========================
+// ===================
 
-window.deleteMovie = async function(id){
+window.deleteMovie = function(index){
 
 const ask =
 confirm("Ma Tirtiraysaa Filimkan?");
 
 if(!ask) return;
 
-try{
+movies.splice(index,1);
 
-await deleteDoc(
-doc(db,"movies",id)
-);
-
-alert("Filimka Waa La Tirtiray");
+saveMovies();
 
 loadMovies();
-
-}catch(err){
-
-console.log(err);
-
-alert("Delete Error");
-
-}
 
 };
 
 
-// =========================
+// ===================
 // WATCH MOVIE
-// =========================
+// ===================
 
 window.watchMovie = function(link){
 
@@ -275,9 +268,9 @@ document.getElementById(
 };
 
 
-// =========================
+// ===================
 // CLOSE VIDEO
-// =========================
+// ===================
 
 window.closeVideo = function(){
 
@@ -292,9 +285,9 @@ document.getElementById(
 };
 
 
-// =========================
+// ===================
 // CLOSE ADMIN
-// =========================
+// ===================
 
 window.closeAdmin = function(){
 
@@ -306,9 +299,9 @@ window.location.href =
 };
 
 
-// =========================
+// ===================
 // SEARCH
-// =========================
+// ===================
 
 document
 .getElementById("searchInput")
@@ -337,8 +330,8 @@ title.includes(value)
 });
 
 
-// =========================
+// ===================
 // START
-// =========================
+// ===================
 
 loadMovies();
