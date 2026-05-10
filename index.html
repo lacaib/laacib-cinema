@@ -1,16 +1,280 @@
 <!DOCTYPE html>
-<html lang="so">
+<html lang="ar">
+
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Laacib Cinema</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+overflow-x:hidden;
+}
+
+/* HEADER */
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 20px;
+background:#111827;
+position:sticky;
+top:0;
+z-index:999;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.logo{
+font-size:28px;
+font-weight:900;
+color:gold;
+}
+
+.header-buttons{
+display:flex;
+gap:10px;
+}
+
+.header-buttons button{
+padding:12px 18px;
+border:none;
+border-radius:12px;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+#googleBtn{
+background:white;
+color:black;
+}
+
+#adminBtn{
+background:#2563eb;
+color:white;
+}
+
+.header-buttons button:hover{
+transform:scale(1.05);
+}
+
+/* HERO */
+
+.hero{
+height:350px;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+background:
+linear-gradient(to right,#000000b9,#00000090),
+url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop');
+
+background-size:cover;
+background-position:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:55px;
+color:gold;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:20px;
+}
+
+/* MOVIES */
+
+.container{
+padding:30px 20px;
+}
+
+.section-title{
+font-size:32px;
+margin-bottom:25px;
+color:gold;
+}
+
+.movies-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+gap:25px;
+}
+
+.movie-card{
+background:#1e293b;
+border-radius:20px;
+overflow:hidden;
+transition:.3s;
+}
+
+.movie-card:hover{
+transform:translateY(-8px);
+}
+
+.movie-card img{
+width:100%;
+height:350px;
+object-fit:cover;
+}
+
+.movie-info{
+padding:15px;
+}
+
+.movie-info h3{
+font-size:24px;
+margin-bottom:10px;
+color:gold;
+}
+
+.movie-info p{
+margin-top:8px;
+line-height:1.6;
+}
+
+.stars{
+margin-top:10px;
+color:gold;
+font-size:20px;
+}
+
+.actions{
+margin-top:15px;
+}
+
+.watch{
+width:100%;
+padding:13px;
+border:none;
+border-radius:12px;
+background:red;
+color:white;
+font-size:17px;
+cursor:pointer;
+}
+
+/* ADMIN */
+
+.admin-panel{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000000dd;
+display:none;
+justify-content:center;
+align-items:center;
+padding:20px;
+overflow:auto;
+z-index:99999;
+}
+
+.admin-box{
+background:#1e293b;
+padding:25px;
+border-radius:20px;
+width:100%;
+max-width:500px;
+}
+
+.admin-box h2{
+margin-bottom:20px;
+text-align:center;
+color:gold;
+}
+
+.admin-box input,
+.admin-box textarea{
+width:100%;
+padding:14px;
+margin-top:12px;
+border:none;
+border-radius:12px;
+background:#0f172a;
+color:white;
+outline:none;
+}
+
+.admin-box textarea{
+height:120px;
+resize:none;
+}
+
+.admin-box button{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:12px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.add-btn{
+background:#2563eb;
+color:white;
+}
+
+.close-btn{
+background:red;
+color:white;
+}
+
+/* DELETE */
+
+.delete-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:#111827;
+padding:10px;
+margin-top:10px;
+border-radius:10px;
+gap:10px;
+}
+
+.delete-item button{
+background:red;
+border:none;
+padding:8px 12px;
+color:white;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:25px;
+margin-top:30px;
+background:#111827;
+}
+
+</style>
 
 </head>
 
@@ -19,46 +283,18 @@
 <header>
 
 <div class="logo">
-
-<div class="logo-art">
-
-<div class="camera camera1">🎥</div>
-
-<div class="camera camera2">📽️</div>
-
-<div class="movie-text">
-<span>L</span>
-<span>A</span>
-<span>A</span>
-<span>C</span>
-<span>I</span>
-<span>B</span>
+🎬 Laacib Cinema
 </div>
 
-</div>
-
-<div class="logo-info">
-
-<h1>Laacib Cinema</h1>
-
-<p>Filimaan & Musalsallo</p>
-
-</div>
-
-</div>
-
-<div class="header-right">
+<div class="header-buttons">
 
 <button id="googleBtn">
-Gal Google
+Login Google
 </button>
 
-<input
-type="text"
-placeholder="Raadi filim..."
-id="searchInput"
-class="search-input"
->
+<button id="adminBtn">
+ADMIN
+</button>
 
 </div>
 
@@ -66,12 +302,12 @@ class="search-input"
 
 <section class="hero">
 
-<div class="hero-content">
+<div>
 
-<h2>Laacib Cinema</h2>
+<h1>Laacib Cinema</h1>
 
 <p>
-Goobta ugu fiican filimada iyo musalsallada
+أفضل مكان للأفلام والمسلسلات
 </p>
 
 </div>
@@ -81,10 +317,54 @@ Goobta ugu fiican filimada iyo musalsallada
 <div class="container">
 
 <h2 class="section-title">
-Filimaan Cusub
+Movies
 </h2>
 
 <div class="movies-grid" id="moviesGrid">
+
+</div>
+
+</div>
+
+<!-- ADMIN PANEL -->
+
+<div class="admin-panel" id="adminPanel">
+
+<div class="admin-box">
+
+<h2>
+Add Movie
+</h2>
+
+<input type="text" id="movieName" placeholder="Movie Name">
+
+<input type="text" id="movieActors" placeholder="Actors">
+
+<input type="text" id="movieStars" placeholder="Stars ★★★★★">
+
+<textarea id="movieDesc" placeholder="Description"></textarea>
+
+<!-- صورة من الهاتف -->
+
+<input type="file" id="movieImage" accept="image/*">
+
+<!-- رابط الفيديو -->
+
+<input type="text" id="movieVideo" placeholder="Video Link">
+
+<button class="add-btn" onclick="addMovie()">
+Add Movie
+</button>
+
+<button class="close-btn" onclick="closeAdmin()">
+Close
+</button>
+
+<h2 style="margin-top:25px;">
+Delete Movies
+</h2>
+
+<div id="deleteMoviesBox"></div>
 
 </div>
 
@@ -96,84 +376,8 @@ Laacib Cinema © 2026
 
 </footer>
 
-<!-- ADMIN PANEL -->
-
-<div id="adminPanel">
-
-<div class="admin-box">
-
-<h2>Admin Panel</h2>
-
-<input
-type="text"
-id="movieName"
-placeholder="Movie Name"
->
-
-<input
-type="text"
-id="movieActors"
-placeholder="Actors"
->
-
-<input
-type="text"
-id="movieStars"
-placeholder="Stars Example 9.8"
->
-
-<label class="upload-label">
-Movie Image
-</label>
-
-<input
-type="file"
-id="movieImage"
-accept="image/*"
->
-
-<label class="upload-label">
-Movie Video
-</label>
-
-<input
-type="file"
-id="movieVideo"
-accept="video/*"
->
-
-<textarea
-id="movieDesc"
-placeholder="Description"
-></textarea>
-
-<button
-class="add-btn"
-onclick="addMovie()"
->
-Add Movie
-</button>
-
-<button
-class="close-btn"
-onclick="closeAdmin()"
->
-Close
-</button>
-
-<h3 class="delete-title">
-Delete Movies
-</h3>
-
-<div id="deleteMoviesBox">
-
-</div>
-
-</div>
-
-</div>
-
 <script type="module" src="script.js"></script>
 
 </body>
+
 </html>
