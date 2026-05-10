@@ -1,280 +1,15 @@
 <!DOCTYPE html>
-<html lang="ar">
-
+<html lang="so">
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Laacib Cinema</title>
 
+<link rel="stylesheet" href="style.css">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-background:#0f172a;
-color:white;
-overflow-x:hidden;
-}
-
-/* HEADER */
-
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 20px;
-background:#111827;
-position:sticky;
-top:0;
-z-index:999;
-flex-wrap:wrap;
-gap:10px;
-}
-
-.logo{
-font-size:28px;
-font-weight:900;
-color:gold;
-}
-
-.header-buttons{
-display:flex;
-gap:10px;
-}
-
-.header-buttons button{
-padding:12px 18px;
-border:none;
-border-radius:12px;
-font-size:15px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
-}
-
-#googleBtn{
-background:white;
-color:black;
-}
-
-#adminBtn{
-background:#2563eb;
-color:white;
-}
-
-.header-buttons button:hover{
-transform:scale(1.05);
-}
-
-/* HERO */
-
-.hero{
-height:350px;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-background:
-linear-gradient(to right,#000000b9,#00000090),
-url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop');
-
-background-size:cover;
-background-position:center;
-padding:20px;
-}
-
-.hero h1{
-font-size:55px;
-color:gold;
-margin-bottom:10px;
-}
-
-.hero p{
-font-size:20px;
-}
-
-/* MOVIES */
-
-.container{
-padding:30px 20px;
-}
-
-.section-title{
-font-size:32px;
-margin-bottom:25px;
-color:gold;
-}
-
-.movies-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
-gap:25px;
-}
-
-.movie-card{
-background:#1e293b;
-border-radius:20px;
-overflow:hidden;
-transition:.3s;
-}
-
-.movie-card:hover{
-transform:translateY(-8px);
-}
-
-.movie-card img{
-width:100%;
-height:350px;
-object-fit:cover;
-}
-
-.movie-info{
-padding:15px;
-}
-
-.movie-info h3{
-font-size:24px;
-margin-bottom:10px;
-color:gold;
-}
-
-.movie-info p{
-margin-top:8px;
-line-height:1.6;
-}
-
-.stars{
-margin-top:10px;
-color:gold;
-font-size:20px;
-}
-
-.actions{
-margin-top:15px;
-}
-
-.watch{
-width:100%;
-padding:13px;
-border:none;
-border-radius:12px;
-background:red;
-color:white;
-font-size:17px;
-cursor:pointer;
-}
-
-/* ADMIN */
-
-.admin-panel{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000000dd;
-display:none;
-justify-content:center;
-align-items:center;
-padding:20px;
-overflow:auto;
-z-index:99999;
-}
-
-.admin-box{
-background:#1e293b;
-padding:25px;
-border-radius:20px;
-width:100%;
-max-width:500px;
-}
-
-.admin-box h2{
-margin-bottom:20px;
-text-align:center;
-color:gold;
-}
-
-.admin-box input,
-.admin-box textarea{
-width:100%;
-padding:14px;
-margin-top:12px;
-border:none;
-border-radius:12px;
-background:#0f172a;
-color:white;
-outline:none;
-}
-
-.admin-box textarea{
-height:120px;
-resize:none;
-}
-
-.admin-box button{
-width:100%;
-padding:14px;
-margin-top:15px;
-border:none;
-border-radius:12px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-}
-
-.add-btn{
-background:#2563eb;
-color:white;
-}
-
-.close-btn{
-background:red;
-color:white;
-}
-
-/* DELETE */
-
-.delete-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:#111827;
-padding:10px;
-margin-top:10px;
-border-radius:10px;
-gap:10px;
-}
-
-.delete-item button{
-background:red;
-border:none;
-padding:8px 12px;
-color:white;
-border-radius:8px;
-cursor:pointer;
-}
-
-/* FOOTER */
-
-footer{
-text-align:center;
-padding:25px;
-margin-top:30px;
-background:#111827;
-}
-
-</style>
 
 </head>
 
@@ -282,19 +17,32 @@ background:#111827;
 
 <header>
 
-<div class="logo">
-🎬 Laacib Cinema
+<div class="logo-box">
+
+<div class="logo-icon">
+🎬
+</div>
+
+<div>
+<h1>Laacib Cinema</h1>
+<p>Aflaanta Ugu Fiican</p>
+</div>
+
 </div>
 
 <div class="header-buttons">
 
 <button id="googleBtn">
-Login Google
+Gal Google
 </button>
+
+<a href="https://lacaib.github.io/laacib-cinema/#admin">
 
 <button id="adminBtn">
 ADMIN
 </button>
+
+</a>
 
 </div>
 
@@ -302,12 +50,12 @@ ADMIN
 
 <section class="hero">
 
-<div>
+<div class="hero-content">
 
-<h1>Laacib Cinema</h1>
+<h2>Laacib Cinema</h2>
 
 <p>
-أفضل مكان للأفلام والمسلسلات
+Goobta ugu fiican aflaanta iyo musalsallada
 </p>
 
 </div>
@@ -317,7 +65,7 @@ ADMIN
 <div class="container">
 
 <h2 class="section-title">
-Movies
+Aflaanta Cusub
 </h2>
 
 <div class="movies-grid" id="moviesGrid">
@@ -333,35 +81,31 @@ Movies
 <div class="admin-box">
 
 <h2>
-Add Movie
+Ku Dar Filim
 </h2>
 
-<input type="text" id="movieName" placeholder="Movie Name">
+<input type="text" id="movieName" placeholder="Magaca Filimka">
 
-<input type="text" id="movieActors" placeholder="Actors">
+<input type="text" id="movieActors" placeholder="Jilayaasha">
 
-<input type="text" id="movieStars" placeholder="Stars ★★★★★">
+<input type="text" id="movieStars" placeholder="Qiimeynta ★★★★★">
 
-<textarea id="movieDesc" placeholder="Description"></textarea>
-
-<!-- صورة من الهاتف -->
+<textarea id="movieDesc" placeholder="Sharaxaad"></textarea>
 
 <input type="file" id="movieImage" accept="image/*">
 
-<!-- رابط الفيديو -->
-
-<input type="text" id="movieVideo" placeholder="Video Link">
+<input type="text" id="movieVideo" placeholder="Linkiga Video-ga">
 
 <button class="add-btn" onclick="addMovie()">
-Add Movie
+Ku Dar Filim
 </button>
 
 <button class="close-btn" onclick="closeAdmin()">
-Close
+Xir
 </button>
 
-<h2 style="margin-top:25px;">
-Delete Movies
+<h2 class="delete-title">
+Tirtir Filimada
 </h2>
 
 <div id="deleteMoviesBox"></div>
@@ -379,5 +123,4 @@ Laacib Cinema © 2026
 <script type="module" src="script.js"></script>
 
 </body>
-
 </html>
