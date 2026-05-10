@@ -13,7 +13,13 @@ deleteDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+
+// ================= PASSWORD =================
+
 const ADMIN_PASSWORD = "IPHONE33@FOYJ45@";
+
+
+// ================= ELEMENTS =================
 
 const moviesGrid =
 document.getElementById("moviesGrid");
@@ -25,7 +31,7 @@ const googleBtn =
 document.getElementById("googleBtn");
 
 
-// GOOGLE LOGIN
+// ================= GOOGLE LOGIN =================
 
 googleBtn.onclick = async ()=>{
 
@@ -37,7 +43,16 @@ await signInWithPopup(auth,provider);
 googleBtn.innerHTML =
 result.user.displayName;
 
+localStorage.setItem(
+"userName",
+result.user.displayName
+);
+
+alert("Si Guul Leh Ayaad Ku Gashay");
+
 }catch(err){
+
+console.log(err);
 
 alert("Cilad Login");
 
@@ -46,7 +61,7 @@ alert("Cilad Login");
 };
 
 
-// ADMIN LOGIN
+// ================= ADMIN LOGIN =================
 
 if(window.location.hash === "#admin"){
 
@@ -68,7 +83,7 @@ alert("Password Qalad");
 }
 
 
-// CLOSE ADMIN
+// ================= CLOSE ADMIN =================
 
 window.closeAdmin = ()=>{
 
@@ -79,13 +94,15 @@ document.getElementById(
 };
 
 
-// LOAD MOVIES
+// ================= LOAD MOVIES =================
 
 async function loadMovies(){
 
 moviesGrid.innerHTML = "";
 
 deleteMoviesBox.innerHTML = "";
+
+try{
 
 const querySnapshot =
 await getDocs(
@@ -138,7 +155,7 @@ deleteMoviesBox.innerHTML += `
 
 <div class="delete-item">
 
-${movie.name}
+<span>${movie.name}</span>
 
 <button onclick="deleteMovie('${id}')">
 
@@ -152,10 +169,18 @@ Tirtir
 
 });
 
+}catch(err){
+
+console.log(err);
+
+alert("Cilad Soo Qaadista Filimada");
+
+}
+
 }
 
 
-// ADD MOVIE
+// ================= ADD MOVIE =================
 
 window.addMovie = async ()=>{
 
@@ -189,38 +214,68 @@ return;
 
 }
 
+try{
+
+alert("Fadlan Sug...");
+
 const reader = new FileReader();
 
 reader.readAsDataURL(imageFile);
 
 reader.onload = async ()=>{
 
+try{
+
 const image = reader.result;
 
 await addDoc(
 collection(db,"movies"),
 {
-name,
-actors,
-stars,
-desc,
-image,
-video
+name:name,
+actors:actors,
+stars:stars,
+desc:desc,
+image:image,
+video:video,
+createdAt:Date.now()
 }
 );
 
-alert("Filimka Waa La Daray");
+alert("Filimka Waa La Daray ✅");
+
+document.getElementById("movieName").value = "";
+document.getElementById("movieActors").value = "";
+document.getElementById("movieStars").value = "";
+document.getElementById("movieDesc").value = "";
+document.getElementById("movieImage").value = "";
+document.getElementById("movieVideo").value = "";
 
 closeAdmin();
 
 loadMovies();
 
-};
+}catch(error){
+
+console.log(error);
+
+alert("Firebase Error: " + error.message);
+
+}
 
 };
 
+}catch(err){
 
-// DELETE MOVIE
+console.log(err);
+
+alert("Qalad Ayaa Dhacay");
+
+}
+
+};
+
+
+// ================= DELETE MOVIE =================
 
 window.deleteMovie = async(id)=>{
 
@@ -228,6 +283,8 @@ const ask =
 confirm("Ma tirtiraysaa filimkan?");
 
 if(!ask) return;
+
+try{
 
 await deleteDoc(
 doc(db,"movies",id)
@@ -237,13 +294,38 @@ alert("Filimka Waa La Tirtiray");
 
 loadMovies();
 
+}catch(err){
+
+console.log(err);
+
+alert("Cilad Tirtirka Filimka");
+
+}
+
 };
 
 
-// START
+// ================= START =================
 
 window.onload = ()=>{
 
 loadMovies();
 
+const user =
+localStorage.getItem("userName");
+
+if(user){
+
+googleBtn.innerHTML = user;
+
+}
+
 };
+
+
+// ================= WEBSITE =================
+
+console.log(
+"Website:",
+"https://lacaib.github.io/laacib-cinema/"
+);
