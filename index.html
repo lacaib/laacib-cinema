@@ -1,12 +1,313 @@
 <!DOCTYPE html>
 <html lang="so">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Laacib Cinema</title>
 
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#020617;
+color:white;
+overflow-x:hidden;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 25px;
+background:#0f172a;
+position:sticky;
+top:0;
+z-index:999;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.logo img{
+width:60px;
+height:60px;
+border-radius:50%;
+}
+
+.logo h1{
+font-size:28px;
+color:gold;
+}
+
+.logo p{
+opacity:.7;
+}
+
+.search-box input{
+padding:12px;
+border:none;
+border-radius:12px;
+outline:none;
+width:240px;
+}
+
+.hero{
+height:420px;
+background:
+linear-gradient(to right,#000000b7,#0000008e),
+url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop');
+
+background-size:cover;
+background-position:center;
+
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h2{
+font-size:70px;
+color:gold;
+text-shadow:0 0 25px gold;
+}
+
+.hero p{
+font-size:24px;
+margin-top:15px;
+}
+
+.container{
+padding:40px 25px;
+}
+
+.section-title{
+font-size:35px;
+margin-bottom:25px;
+color:gold;
+}
+
+.movies-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
+}
+
+.movie-card{
+background:#111827;
+border-radius:20px;
+overflow:hidden;
+transition:.4s;
+}
+
+.movie-card:hover{
+transform:translateY(-10px);
+}
+
+.movie-card img{
+width:100%;
+height:360px;
+object-fit:cover;
+}
+
+.movie-info{
+padding:20px;
+}
+
+.movie-info h3{
+color:gold;
+margin-bottom:10px;
+font-size:25px;
+}
+
+.movie-info p{
+opacity:.8;
+line-height:1.7;
+margin-bottom:10px;
+}
+
+.rating{
+color:gold;
+font-size:20px;
+margin-bottom:15px;
+}
+
+.watch-btn,
+.download-btn,
+.delete-btn{
+width:100%;
+padding:13px;
+border:none;
+border-radius:12px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
+
+.watch-btn{
+background:#2563eb;
+color:white;
+}
+
+.download-btn{
+background:gold;
+color:black;
+text-decoration:none;
+display:block;
+text-align:center;
+}
+
+.delete-btn{
+background:red;
+color:white;
+}
+
+footer{
+background:#0f172a;
+padding:25px;
+text-align:center;
+margin-top:40px;
+}
+
+.admin-panel{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000000e0;
+overflow:auto;
+padding:20px;
+z-index:99999;
+}
+
+.admin-box{
+background:#111827;
+padding:25px;
+border-radius:20px;
+max-width:500px;
+margin:auto;
+}
+
+.admin-box h2{
+text-align:center;
+margin-bottom:20px;
+color:gold;
+}
+
+.admin-box input,
+.admin-box textarea{
+width:100%;
+padding:14px;
+margin-top:12px;
+border:none;
+border-radius:12px;
+background:#1e293b;
+color:white;
+}
+
+.admin-box textarea{
+height:120px;
+resize:none;
+}
+
+.admin-box button{
+width:100%;
+padding:14px;
+margin-top:15px;
+border:none;
+border-radius:12px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.add-btn{
+background:#2563eb;
+color:white;
+}
+
+.close-btn{
+background:red;
+color:white;
+}
+
+.video-modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000000f0;
+justify-content:center;
+align-items:center;
+padding:20px;
+z-index:999999;
+}
+
+.video-box{
+width:100%;
+max-width:900px;
+}
+
+.video-box iframe{
+width:100%;
+height:500px;
+border:none;
+border-radius:20px;
+}
+
+.close-video{
+width:100%;
+padding:14px;
+margin-top:15px;
+background:red;
+color:white;
+border:none;
+border-radius:12px;
+font-size:18px;
+cursor:pointer;
+}
+
+@media(max-width:700px){
+
+.hero h2{
+font-size:45px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+.search-box input{
+width:160px;
+}
+
+.video-box iframe{
+height:240px;
+}
+
+}
+
+</style>
+
 </head>
 
 <body>
@@ -18,36 +319,49 @@
 <img src="https://cdn-icons-png.flaticon.com/512/3418/3418886.png">
 
 <div>
+
 <h1>Laacib Cinema</h1>
+
 <p>Aflaanta Ugu Fiican</p>
+
 </div>
 
 </div>
+
+<div class="search-box">
 
 <input type="text" id="searchInput" placeholder="Raadi Filim...">
+
+</div>
 
 </header>
 
 <section class="hero">
 
+<div>
+
 <h2>Laacib Cinema</h2>
 
-<p>
-Goobta ugu fiican aflaanta iyo musalsallada
-</p>
+<p>Goobta ugu fiican aflaanta iyo musalsallada</p>
+
+</div>
 
 </section>
 
-<section class="movies-section">
+<div class="container">
 
-<h2>Aflaanta Cusub</h2>
+<h2 class="section-title">
+Aflaanta Cusub
+</h2>
 
 <div class="movies-grid" id="moviesGrid"></div>
 
-</section>
+</div>
 
 <footer>
+
 Laacib Cinema © 2026
+
 </footer>
 
 <!-- ADMIN -->
@@ -60,21 +374,21 @@ Laacib Cinema © 2026
 
 <input type="text" id="movieTitle" placeholder="Magaca Filimka">
 
-<input type="text" id="movieDesc" placeholder="Sharaxaad">
+<textarea id="movieDesc" placeholder="Sharaxaad"></textarea>
 
-<input type="text" id="movieRating" placeholder="Rating">
+<input type="text" id="movieRating" placeholder="Rating ★★★★★">
 
-<input type="text" id="movieImage" placeholder="Link-ga Sawirka">
+<input type="file" id="movieImage" accept="image/*">
 
 <input type="text" id="movieVideo" placeholder="Link-ga YouTube">
 
 <input type="text" id="movieDownload" placeholder="Link-ga Download">
 
-<button onclick="addMovie()" class="add-btn">
+<button class="add-btn" onclick="addMovie()">
 Ku Dar Filim
 </button>
 
-<button onclick="closeAdmin()" class="close-btn">
+<button class="close-btn" onclick="closeAdmin()">
 Xir
 </button>
 
@@ -90,7 +404,7 @@ Xir
 
 <iframe id="videoFrame" allowfullscreen></iframe>
 
-<button onclick="closeVideo()" class="close-video">
+<button class="close-video" onclick="closeVideo()">
 Xir
 </button>
 
@@ -98,7 +412,332 @@ Xir
 
 </div>
 
-<script type="module" src="app.js"></script>
+<script>
+
+const ADMIN_PASSWORD =
+"IPHONE33@FOYJ45@";
+
+const moviesGrid =
+document.getElementById("moviesGrid");
+
+const adminPanel =
+document.getElementById("adminPanel");
+
+
+// ADMIN LOGIN
+
+if(window.location.hash === "#admin"){
+
+const pass =
+prompt("Geli Password-ka Admin");
+
+if(pass === ADMIN_PASSWORD){
+
+adminPanel.style.display = "block";
+
+}else{
+
+alert("Password Khaldan");
+
+window.location.href =
+"https://lacaib.github.io/laacib-cinema/";
+
+}
+
+}
+
+
+// STORAGE
+
+let movies =
+JSON.parse(
+localStorage.getItem("laacib_movies")
+) || [];
+
+
+// SAVE
+
+function saveMovies(){
+
+localStorage.setItem(
+"laacib_movies",
+JSON.stringify(movies)
+);
+
+}
+
+
+// YOUTUBE EMBED
+
+function youtubeEmbed(url){
+
+if(url.includes("watch?v=")){
+
+return url.replace(
+"watch?v=",
+"embed/"
+);
+
+}
+
+if(url.includes("youtu.be/")){
+
+return "https://www.youtube.com/embed/" +
+url.split("youtu.be/")[1];
+
+}
+
+return url;
+
+}
+
+
+// LOAD MOVIES
+
+function loadMovies(){
+
+moviesGrid.innerHTML = "";
+
+movies.forEach((movie,index)=>{
+
+moviesGrid.innerHTML += `
+
+<div class="movie-card">
+
+<img src="${movie.image}">
+
+<div class="movie-info">
+
+<h3>${movie.title}</h3>
+
+<p>${movie.desc}</p>
+
+<div class="rating">
+
+⭐ ${movie.rating}
+
+</div>
+
+<button
+class="watch-btn"
+onclick="watchMovie('${youtubeEmbed(movie.video)}')">
+
+Daawo Filim
+
+</button>
+
+<a
+href="${movie.download}"
+target="_blank"
+class="download-btn">
+
+Download
+
+</a>
+
+${
+window.location.hash === "#admin"
+?
+
+`
+<button
+class="delete-btn"
+onclick="deleteMovie(${index})">
+
+Tirtir
+
+</button>
+`
+
+:
+
+""
+
+}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+// ADD MOVIE
+
+window.addMovie = function(){
+
+const title =
+document.getElementById("movieTitle").value;
+
+const desc =
+document.getElementById("movieDesc").value;
+
+const rating =
+document.getElementById("movieRating").value;
+
+const imageFile =
+document.getElementById("movieImage").files[0];
+
+const video =
+document.getElementById("movieVideo").value;
+
+const download =
+document.getElementById("movieDownload").value;
+
+if(
+!title ||
+!imageFile ||
+!video
+){
+
+alert("Buuxi Xogta");
+
+return;
+
+}
+
+const reader =
+new FileReader();
+
+reader.readAsDataURL(imageFile);
+
+reader.onload = function(){
+
+const image =
+reader.result;
+
+movies.unshift({
+
+title,
+desc,
+rating,
+image,
+video,
+download
+
+});
+
+saveMovies();
+
+loadMovies();
+
+alert("Filimka Waa La Daray");
+
+document.getElementById("movieTitle").value = "";
+
+document.getElementById("movieDesc").value = "";
+
+document.getElementById("movieRating").value = "";
+
+document.getElementById("movieImage").value = "";
+
+document.getElementById("movieVideo").value = "";
+
+document.getElementById("movieDownload").value = "";
+
+};
+
+};
+
+
+// DELETE MOVIE
+
+window.deleteMovie = function(index){
+
+const ask =
+confirm("Ma Tirtiraysaa Filimkan?");
+
+if(!ask) return;
+
+movies.splice(index,1);
+
+saveMovies();
+
+loadMovies();
+
+};
+
+
+// WATCH MOVIE
+
+window.watchMovie = function(link){
+
+document.getElementById(
+"videoModal"
+).style.display = "flex";
+
+document.getElementById(
+"videoFrame"
+).src = link;
+
+};
+
+
+// CLOSE VIDEO
+
+window.closeVideo = function(){
+
+document.getElementById(
+"videoModal"
+).style.display = "none";
+
+document.getElementById(
+"videoFrame"
+).src = "";
+
+};
+
+
+// CLOSE ADMIN
+
+window.closeAdmin = function(){
+
+adminPanel.style.display = "none";
+
+window.location.href =
+"https://lacaib.github.io/laacib-cinema/";
+
+};
+
+
+// SEARCH
+
+document
+.getElementById("searchInput")
+.addEventListener("input",(e)=>{
+
+const value =
+e.target.value.toLowerCase();
+
+const cards =
+document.querySelectorAll(".movie-card");
+
+cards.forEach((card)=>{
+
+const title =
+card.querySelector("h3")
+.innerText
+.toLowerCase();
+
+card.style.display =
+title.includes(value)
+? "block"
+: "none";
+
+});
+
+});
+
+
+// START
+
+loadMovies();
+
+</script>
 
 </body>
 </html>
