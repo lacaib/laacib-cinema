@@ -138,12 +138,42 @@ ${movie.stars}
 ${movie.desc}
 </p>
 
-<button class="watch"
-onclick="window.open('${movie.video}')">
+<div class="video-box">
+
+<iframe
+src="${movie.video}"
+frameborder="0"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<div class="movie-buttons">
+
+<a href="${movie.video}"
+target="_blank">
+
+<button class="watch-btn">
 
 Daawo Filimka
 
 </button>
+
+</a>
+
+<a href="${movie.video}"
+download
+target="_blank">
+
+<button class="download-btn">
+
+Soo Deji Filimka
+
+</button>
+
+</a>
+
+</div>
 
 </div>
 
@@ -244,10 +274,15 @@ createdAt:Date.now()
 alert("Filimka Waa La Daray ✅");
 
 document.getElementById("movieName").value = "";
+
 document.getElementById("movieActors").value = "";
+
 document.getElementById("movieStars").value = "";
+
 document.getElementById("movieDesc").value = "";
+
 document.getElementById("movieImage").value = "";
+
 document.getElementById("movieVideo").value = "";
 
 closeAdmin();
