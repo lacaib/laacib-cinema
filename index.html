@@ -7,9 +7,10 @@
 
 <title>Laacib Cinema</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -20,8 +21,6 @@
 <div class="logo">
 
 <div class="logo-art">
-
-<div class="hand hand1"></div>
 
 <div class="camera camera1">🎥</div>
 
@@ -36,32 +35,30 @@
 <span>B</span>
 </div>
 
-<div class="hand hand2"></div>
-
 </div>
 
 <div class="logo-info">
+
 <h1>Laacib Cinema</h1>
+
 <p>Filimaan & Musalsallo</p>
-</div>
 
 </div>
 
-<div class="google-login">
+</div>
+
+<div class="header-right">
 
 <button id="googleBtn">
-
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-
-<span>Gal Google</span>
-
+Gal Google
 </button>
 
-</div>
-
-<div class="search-box">
-
-<input type="text" placeholder="Raadi filim..." id="searchInput">
+<input
+type="text"
+placeholder="Raadi filim..."
+id="searchInput"
+class="search-input"
+>
 
 </div>
 
@@ -73,7 +70,9 @@
 
 <h2>Laacib Cinema</h2>
 
-<p>Goobta ugu fiican filimada iyo musalsallada</p>
+<p>
+Goobta ugu fiican filimada iyo musalsallada
+</p>
 
 </div>
 
@@ -81,14 +80,20 @@
 
 <div class="container">
 
-<h2 class="section-title">Filimaan Cusub</h2>
+<h2 class="section-title">
+Filimaan Cusub
+</h2>
 
-<div class="movies-grid" id="moviesGrid"></div>
+<div class="movies-grid" id="moviesGrid">
+
+</div>
 
 </div>
 
 <footer>
+
 Laacib Cinema © 2026
+
 </footer>
 
 <!-- ADMIN PANEL -->
@@ -99,39 +104,76 @@ Laacib Cinema © 2026
 
 <h2>Admin Panel</h2>
 
-<input type="text" id="movieName" placeholder="Movie Name">
+<input
+type="text"
+id="movieName"
+placeholder="Movie Name"
+>
 
-<input type="text" id="movieActors" placeholder="Actors">
+<input
+type="text"
+id="movieActors"
+placeholder="Actors"
+>
 
-<input type="text" id="movieStars" placeholder="Stars ★★★★★">
+<input
+type="text"
+id="movieStars"
+placeholder="Stars Example 9.8"
+>
 
-<input type="file" id="movieImageFile" accept="image/*">
+<label class="upload-label">
+Movie Image
+</label>
 
-<input type="file" id="movieVideoFile" accept="video/*">
+<input
+type="file"
+id="movieImage"
+accept="image/*"
+>
 
-<textarea id="movieDesc" placeholder="Description"></textarea>
+<label class="upload-label">
+Movie Video
+</label>
 
-<button class="add-btn" onclick="addMovie()">
+<input
+type="file"
+id="movieVideo"
+accept="video/*"
+>
+
+<textarea
+id="movieDesc"
+placeholder="Description"
+></textarea>
+
+<button
+class="add-btn"
+onclick="addMovie()"
+>
 Add Movie
 </button>
 
-<button class="close-btn" onclick="closeAdmin()">
+<button
+class="close-btn"
+onclick="closeAdmin()"
+>
 Close
 </button>
 
-<h2 style="margin-top:20px;color:gold;">
+<h3 class="delete-title">
 Delete Movies
-</h2>
+</h3>
 
-<div id="moviesManager"></div>
+<div id="deleteMoviesBox">
+
+</div>
 
 </div>
 
 </div>
 
-<script src="script.js"></script>
-
-<script type="module" src="firebase.js"></script>
+<script type="module" src="script.js"></script>
 
 </body>
 </html>
