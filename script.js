@@ -1,43 +1,80 @@
+import { db, storage } from "./firebase.js";
+
+import {
+collection,
+addDoc,
+getDocs,
+deleteDoc,
+doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
 const ADMIN_PASSWORD = "IPhone33@foyj45@^";
+
+const moviesGrid = document.getElementById("moviesGrid");
+
+const deleteMoviesBox = document.getElementById("deleteMoviesBox");
 
 const googleBtn = document.getElementById("googleBtn");
 
-let movies = JSON.parse(localStorage.getItem("movies")) || [
+googleBtn.onclick = () => {
 
-{
-name:'John Wick',
-actors:'Keanu Reeves',
-stars:'★★★★★',
-image:'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200&auto=format&fit=crop',
-video:'https://www.w3schools.com/html/mov_bbb.mp4',
-desc:'Filim action ah oo aad u xiiso badan.'
-}
+let user = localStorage.getItem("laacibUser");
 
-];
+if(!user){
 
-function saveMovies(){
+const name = prompt("Geli magacaaga");
 
-localStorage.setItem("movies",JSON.stringify(movies));
+if(name){
+
+localStorage.setItem("laacibUser",name);
+
+googleBtn.innerHTML = name;
 
 }
 
-function renderMovies(){
+}else{
 
-const grid = document.getElementById('moviesGrid');
+googleBtn.innerHTML = user;
 
-const search = document.getElementById('searchInput')
-.value.toLowerCase();
+}
 
-grid.innerHTML = '';
+};
 
-movies
-.filter(movie =>
-movie.name.toLowerCase().includes(search)
-)
+window.onload = ()=>{
 
-.forEach((movie,index)=>{
+loadMovies();
 
-grid.innerHTML += `
+const user = localStorage.getItem("laacibUser");
+
+if(user){
+
+googleBtn.innerHTML = user;
+
+}
+
+};
+
+async function loadMovies(){
+
+moviesGrid.innerHTML = "";
+
+deleteMoviesBox.innerHTML = "";
+
+const querySnapshot = await getDocs(collection(db,"movies"));
+
+querySnapshot.forEach((docSnap)=>{
+
+const movie = docSnap.data();
+
+const id = docSnap.id;
+
+moviesGrid.innerHTML += `
 
 <div class="movie-card">
 
@@ -47,7 +84,7 @@ grid.innerHTML += `
 
 <h3>${movie.name}</h3>
 
-<p><b>Jilayaasha:</b> ${movie.actors}</p>
+<p><b>Actors:</b> ${movie.actors}</p>
 
 <div class="stars">${movie.stars}</div>
 
@@ -56,13 +93,8 @@ grid.innerHTML += `
 <div class="actions">
 
 <button class="watch"
-onclick="watchMovie('${movie.video}')">
-Daawo
-</button>
-
-<button class="download"
 onclick="window.open('${movie.video}')">
-Download
+Watch
 </button>
 
 </div>
@@ -73,76 +105,13 @@ Download
 
 `;
 
-});
+deleteMoviesBox.innerHTML += `
 
-renderManager();
+<div class="delete-item">
 
-}
+${movie.name}
 
-function watchMovie(video){
-
-const newWindow = window.open("");
-
-newWindow.document.write(`
-
-<style>
-body{
-margin:0;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-video{
-width:100%;
-height:100%;
-object-fit:contain;
-}
-</style>
-
-<video controls autoplay>
-<source src="${video}">
-</video>
-
-`);
-
-}
-
-function renderManager(){
-
-const manager = document.getElementById("moviesManager");
-
-if(!manager) return;
-
-manager.innerHTML = "";
-
-movies.forEach((movie,index)=>{
-
-manager.innerHTML += `
-
-<div style="
-background:#18284b;
-padding:10px;
-margin-top:10px;
-border-radius:10px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-">
-
-<span>${movie.name}</span>
-
-<button onclick="deleteMovie(${index})"
-style="
-background:red;
-color:white;
-border:none;
-padding:8px 14px;
-border-radius:8px;
-cursor:pointer;
-">
+<button onclick="deleteMovie('${id}')">
 Delete
 </button>
 
@@ -154,25 +123,21 @@ Delete
 
 }
 
-function deleteMovie(index){
+window.deleteMovie = async function(id){
 
-const confirmDelete = confirm("Ma hubtaa inaad delete gareyneyso filmkaan?");
+const ask = confirm("Delete this movie?");
 
-if(confirmDelete){
+if(!ask) return;
 
-movies.splice(index,1);
-
-saveMovies();
-
-renderMovies();
+await deleteDoc(doc(db,"movies",id));
 
 alert("Movie Deleted");
 
-}
+loadMovies();
 
 }
 
-function addMovie(){
+window.addMovie = async function(){
 
 const name = document.getElementById("movieName").value;
 
@@ -182,11 +147,15 @@ const stars = document.getElementById("movieStars").value;
 
 const desc = document.getElementById("movieDesc").value;
 
-const imageFile = document.getElementById("movieImageFile").files[0];
+const imageFile = document.getElementById("movieImage").files[0];
 
-const videoFile = document.getElementById("movieVideoFile").files[0];
+const videoFile = document.getElementById("movieVideo").files[0];
 
-if(!name || !imageFile || !videoFile){
+if(
+!name ||
+!imageFile ||
+!videoFile
+){
 
 alert("Fill all inputs");
 
@@ -194,50 +163,52 @@ return;
 
 }
 
-const imageReader = new FileReader();
+try{
 
-imageReader.onload = function(e){
+alert("Uploading...");
 
-const image = e.target.result;
+const imageRef = ref(
+storage,
+"images/" + Date.now() + imageFile.name
+);
 
-const videoReader = new FileReader();
+await uploadBytes(imageRef,imageFile);
 
-videoReader.onload = function(v){
+const imageURL = await getDownloadURL(imageRef);
 
-const video = v.target.result;
+const videoRef = ref(
+storage,
+"videos/" + Date.now() + videoFile.name
+);
 
-movies.unshift({
+await uploadBytes(videoRef,videoFile);
+
+const videoURL = await getDownloadURL(videoRef);
+
+await addDoc(collection(db,"movies"),{
 
 name,
 actors,
 stars,
-image,
-video,
-desc
+desc,
+image:imageURL,
+video:videoURL
 
 });
-
-saveMovies();
-
-renderMovies();
 
 alert("Movie Added Successfully");
 
 closeAdmin();
 
-};
+loadMovies();
 
-videoReader.readAsDataURL(videoFile);
+}catch(err){
 
-};
+console.log(err);
 
-imageReader.readAsDataURL(imageFile);
+alert("Upload Error");
 
 }
-
-function closeAdmin(){
-
-document.getElementById("adminPanel").style.display = "none";
 
 }
 
@@ -257,46 +228,8 @@ alert("Wrong Password");
 
 }
 
-window.onload = ()=>{
+window.closeAdmin = function(){
 
-renderMovies();
-
-const user = localStorage.getItem("laacibUser");
-
-if(user){
-
-googleBtn.innerHTML = `
-
-<img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-
-<span>${user}</span>
-
-`;
+document.getElementById("adminPanel").style.display = "none";
 
 }
-
-};
-
-googleBtn.onclick = () => {
-
-let user = localStorage.getItem("laacibUser");
-
-if(!user){
-
-const name = prompt("Geli magacaaga");
-
-if(name){
-
-localStorage.setItem("laacibUser",name);
-
-location.reload();
-
-}
-
-}
-
-};
-
-document
-.getElementById('searchInput')
-.addEventListener('input',renderMovies);
