@@ -91,6 +91,8 @@
 Laacib Cinema © 2026
 </footer>
 
+<!-- ADMIN PANEL -->
+
 <div id="adminPanel">
 
 <div class="admin-box">
@@ -103,9 +105,9 @@ Laacib Cinema © 2026
 
 <input type="text" id="movieStars" placeholder="Stars ★★★★★">
 
-<input type="text" id="movieVideo" placeholder="Video URL">
-
 <input type="file" id="movieImageFile" accept="image/*">
+
+<input type="file" id="movieVideoFile" accept="video/*">
 
 <textarea id="movieDesc" placeholder="Description"></textarea>
 
@@ -117,18 +119,19 @@ Add Movie
 Close
 </button>
 
+<h2 style="margin-top:20px;color:gold;">
+Delete Movies
+</h2>
+
+<div id="moviesManager"></div>
+
 </div>
 
 </div>
+
+<script src="script.js"></script>
 
 <script type="module" src="firebase.js"></script>
-
-<script src="script.js"></script>
-
-</body>
-</html></script>
-
-<script src="script.js"></script>
 
 </body>
 </html>
