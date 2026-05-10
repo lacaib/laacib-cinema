@@ -37,16 +37,7 @@ await signInWithPopup(auth,provider);
 googleBtn.innerHTML =
 result.user.displayName;
 
-localStorage.setItem(
-"userName",
-result.user.displayName
-);
-
-alert("Si Guul Leh Ayaad Ku Gashay");
-
 }catch(err){
-
-console.log(err);
 
 alert("Cilad Login");
 
@@ -57,7 +48,12 @@ alert("Cilad Login");
 
 // ADMIN LOGIN
 
-if(window.location.hash === "#admin"){
+const isAdminPage =
+window.location.href.includes("#admin");
+
+if(isAdminPage){
+
+setTimeout(()=>{
 
 const password =
 prompt("Geli Password-ka Admin");
@@ -68,11 +64,27 @@ document.getElementById(
 "adminPanel"
 ).style.display = "flex";
 
+// حذف #admin من الرابط
+window.history.replaceState(
+{},
+document.title,
+window.location.pathname
+);
+
 }else{
 
 alert("Password Qalad");
 
+// حذف #admin أيضاً
+window.history.replaceState(
+{},
+document.title,
+window.location.pathname
+);
+
 }
+
+},500);
 
 }
 
@@ -95,8 +107,6 @@ async function loadMovies(){
 moviesGrid.innerHTML = "";
 
 deleteMoviesBox.innerHTML = "";
-
-try{
 
 const querySnapshot =
 await getDocs(
@@ -132,38 +142,21 @@ ${movie.stars}
 ${movie.desc}
 </p>
 
-<div class="video-box">
+<video controls width="100%" style="margin-top:15px;border-radius:12px;">
 
-<iframe
-src="${movie.video}"
-frameborder="0"
-allowfullscreen>
-</iframe>
+<source src="${movie.video}" type="video/mp4">
 
-</div>
+</video>
 
-<div class="movie-buttons">
+<a href="${movie.video}" download>
 
-<a href="${movie.video}"
-target="_blank">
+<button class="watch">
 
-<button class="watch-btn">
-Daawo
+Soo Daji Filimka
+
 </button>
 
 </a>
-
-<a href="${movie.video}"
-download
-target="_blank">
-
-<button class="download-btn">
-Soo Deji
-</button>
-
-</a>
-
-</div>
 
 </div>
 
@@ -175,7 +168,7 @@ deleteMoviesBox.innerHTML += `
 
 <div class="delete-item">
 
-<span>${movie.name}</span>
+${movie.name}
 
 <button onclick="deleteMovie('${id}')">
 
@@ -188,14 +181,6 @@ Tirtir
 `;
 
 });
-
-}catch(err){
-
-console.log(err);
-
-alert("Cilad Soo Qaadista Filimada");
-
-}
 
 }
 
@@ -234,56 +219,38 @@ return;
 
 }
 
-try{
-
-alert("Fadlan Sug...");
-
 const reader = new FileReader();
 
 reader.readAsDataURL(imageFile);
 
 reader.onload = async ()=>{
 
-try{
-
 const image = reader.result;
 
 await addDoc(
 collection(db,"movies"),
 {
-name:name,
-actors:actors,
-stars:stars,
-desc:desc,
-image:image,
-video:video,
-createdAt:Date.now()
+name,
+actors,
+stars,
+desc,
+image,
+video
 }
 );
 
 alert("Filimka Waa La Daray");
 
-closeAdmin();
+document.getElementById("movieName").value = "";
+document.getElementById("movieActors").value = "";
+document.getElementById("movieStars").value = "";
+document.getElementById("movieDesc").value = "";
+document.getElementById("movieImage").value = "";
+document.getElementById("movieVideo").value = "";
 
 loadMovies();
 
-}catch(error){
-
-console.log(error);
-
-alert("Firebase Error: " + error.message);
-
-}
-
 };
-
-}catch(err){
-
-console.log(err);
-
-alert("Qalad Ayaa Dhacay");
-
-}
 
 };
 
@@ -297,8 +264,6 @@ confirm("Ma tirtiraysaa filimkan?");
 
 if(!ask) return;
 
-try{
-
 await deleteDoc(
 doc(db,"movies",id)
 );
@@ -306,14 +271,6 @@ doc(db,"movies",id)
 alert("Filimka Waa La Tirtiray");
 
 loadMovies();
-
-}catch(err){
-
-console.log(err);
-
-alert("Cilad Tirtirka Filimka");
-
-}
 
 };
 
@@ -323,14 +280,5 @@ alert("Cilad Tirtirka Filimka");
 window.onload = ()=>{
 
 loadMovies();
-
-const user =
-localStorage.getItem("userName");
-
-if(user){
-
-googleBtn.innerHTML = user;
-
-}
 
 };
