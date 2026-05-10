@@ -2,8 +2,7 @@ import {
 db,
 auth,
 provider,
-signInWithPopup,
-signOut
+signInWithPopup
 } from "./firebase.js";
 
 import {
@@ -14,7 +13,13 @@ deleteDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const ADMIN_PASSWORD = "IPhone33@foyj45@^";
+
+// ================= PASSWORD =================
+
+const ADMIN_PASSWORD = "IPHONE33@FOYJ45@";
+
+
+// ================= ELEMENTS =================
 
 const moviesGrid =
 document.getElementById("moviesGrid");
@@ -40,7 +45,8 @@ await signInWithPopup(auth,provider);
 
 const user = result.user;
 
-googleBtn.innerHTML = user.displayName;
+googleBtn.innerHTML =
+user.displayName;
 
 localStorage.setItem(
 "userName",
@@ -51,9 +57,42 @@ user.displayName
 
 console.log(err);
 
-alert("Login Error");
+alert("Cilad Login");
 
 }
+
+};
+
+
+// ================= ADMIN =================
+
+adminBtn.onclick = ()=>{
+
+const password =
+prompt("Geli Password-ka Admin");
+
+if(password === ADMIN_PASSWORD){
+
+document.getElementById(
+"adminPanel"
+).style.display = "flex";
+
+}else{
+
+alert("Password Qalad");
+
+}
+
+};
+
+
+// ================= CLOSE ADMIN =================
+
+window.closeAdmin = ()=>{
+
+document.getElementById(
+"adminPanel"
+).style.display = "none";
 
 };
 
@@ -87,20 +126,25 @@ moviesGrid.innerHTML += `
 
 <h3>${movie.name}</h3>
 
-<p><b>Actors:</b> ${movie.actors}</p>
+<p>
+<b>Jilayaasha:</b>
+${movie.actors}
+</p>
 
 <div class="stars">
 ${movie.stars}
 </div>
 
-<p>${movie.desc}</p>
+<p>
+${movie.desc}
+</p>
 
 <div class="actions">
 
 <button class="watch"
 onclick="window.open('${movie.video}')">
 
-Watch
+Daawo Filimka
 
 </button>
 
@@ -120,7 +164,7 @@ ${movie.name}
 
 <button onclick="deleteMovie('${id}')">
 
-Delete
+Tirtir
 
 </button>
 
@@ -131,39 +175,6 @@ Delete
 });
 
 }
-
-
-// ================= ADMIN =================
-
-adminBtn.onclick = ()=>{
-
-const password =
-prompt("Enter Admin Password");
-
-if(password === ADMIN_PASSWORD){
-
-document.getElementById(
-"adminPanel"
-).style.display = "flex";
-
-}else{
-
-alert("Wrong Password");
-
-}
-
-};
-
-
-// ================= CLOSE ADMIN =================
-
-window.closeAdmin = ()=>{
-
-document.getElementById(
-"adminPanel"
-).style.display = "none";
-
-};
 
 
 // ================= ADD MOVIE =================
@@ -194,7 +205,7 @@ if(
 !video
 ){
 
-alert("Fill all inputs");
+alert("Fadlan buuxi meelaha bannaan");
 
 return;
 
@@ -220,7 +231,7 @@ video
 }
 );
 
-alert("Movie Added");
+alert("Filimka Waa La Daray");
 
 closeAdmin();
 
@@ -236,7 +247,7 @@ loadMovies();
 window.deleteMovie = async(id)=>{
 
 const ask =
-confirm("Delete Movie?");
+confirm("Ma rabtaa inaad tirtirto filimkan?");
 
 if(!ask) return;
 
@@ -244,7 +255,7 @@ await deleteDoc(
 doc(db,"movies",id)
 );
 
-alert("Movie Deleted");
+alert("Filimka Waa La Tirtiray");
 
 loadMovies();
 
@@ -267,3 +278,11 @@ googleBtn.innerHTML = user;
 }
 
 };
+
+
+// ================= WEBSITE =================
+
+console.log(
+"Website:",
+"https://lacaib.github.io/laacib-cinema/"
+);
