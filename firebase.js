@@ -5,8 +5,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import {
-  getStorage
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBHXDHJq6iX_wUi3B9Ggbs_YMyIPCw6fpU",
@@ -20,9 +23,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
-const storage = getStorage(app);
 
-window.db = db;
-window.storage = storage;
+const auth = getAuth(app);
 
-console.log("Firebase Connected ✅");
+const provider = new GoogleAuthProvider();
+
+export {
+  db,
+  auth,
+  provider,
+  signInWithPopup,
+  signOut
+};
