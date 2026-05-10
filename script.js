@@ -2,7 +2,8 @@ import {
 db,
 auth,
 provider,
-signInWithPopup
+signInWithPopup,
+storage
 } from "./firebase.js";
 
 import {
@@ -11,7 +12,15 @@ addDoc,
 getDocs,
 deleteDoc,
 doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+ref,
+uploadBytes,
+getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
 
 const ADMIN_PASSWORD = "IPHONE33@FOYJ45@";
 
@@ -48,12 +57,9 @@ alert("Cilad Login");
 
 // ADMIN LOGIN
 
-const isAdminPage =
-window.location.href.includes("#admin");
-
-if(isAdminPage){
-
-setTimeout(()=>{
+if(
+window.location.href.includes("#admin")
+){
 
 const password =
 prompt("Geli Password-ka Admin");
@@ -64,27 +70,13 @@ document.getElementById(
 "adminPanel"
 ).style.display = "flex";
 
-// حذف #admin من الرابط
-window.history.replaceState(
-{},
-document.title,
-window.location.pathname
-);
-
 }else{
 
 alert("Password Qalad");
 
-// حذف #admin أيضاً
-window.history.replaceState(
-{},
-document.title,
-window.location.pathname
-);
+window.location.hash = "";
 
 }
-
-},500);
 
 }
 
@@ -96,6 +88,8 @@ window.closeAdmin = ()=>{
 document.getElementById(
 "adminPanel"
 ).style.display = "none";
+
+window.location.hash = "";
 
 };
 
@@ -152,7 +146,7 @@ ${movie.desc}
 
 <button class="watch">
 
-Soo Daji Filimka
+Download Film
 
 </button>
 
@@ -219,13 +213,22 @@ return;
 
 }
 
-const reader = new FileReader();
+try{
 
-reader.readAsDataURL(imageFile);
+alert("Sawirka Waa La Upload Gareynayaa...");
 
-reader.onload = async ()=>{
+const imageRef = ref(
+storage,
+"movies/" + Date.now() + imageFile.name
+);
 
-const image = reader.result;
+await uploadBytes(
+imageRef,
+imageFile
+);
+
+const imageURL =
+await getDownloadURL(imageRef);
 
 await addDoc(
 collection(db,"movies"),
@@ -234,23 +237,24 @@ name,
 actors,
 stars,
 desc,
-image,
+image:imageURL,
 video
 }
 );
 
 alert("Filimka Waa La Daray");
 
-document.getElementById("movieName").value = "";
-document.getElementById("movieActors").value = "";
-document.getElementById("movieStars").value = "";
-document.getElementById("movieDesc").value = "";
-document.getElementById("movieImage").value = "";
-document.getElementById("movieVideo").value = "";
+closeAdmin();
 
 loadMovies();
 
-};
+}catch(err){
+
+console.log(err);
+
+alert("Firebase Error: " + err.message);
+
+}
 
 };
 
