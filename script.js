@@ -3,32 +3,42 @@ const ADMIN_PASSWORD = "IPhone33@foyj45@^";
 const googleBtn = document.getElementById("googleBtn");
 
 let movies = JSON.parse(localStorage.getItem("movies")) || [
+
 {
 name:'John Wick',
 actors:'Keanu Reeves',
 stars:'★★★★★',
 image:'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=1200&auto=format&fit=crop',
-video:'https://example.com',
+video:'https://www.w3schools.com/html/mov_bbb.mp4',
 desc:'Filim action ah oo aad u xiiso badan.'
 }
+
 ];
 
 function saveMovies(){
+
 localStorage.setItem("movies",JSON.stringify(movies));
+
 }
 
 function renderMovies(){
 
-const grid=document.getElementById('moviesGrid');
-const search=document.getElementById('searchInput').value.toLowerCase();
+const grid = document.getElementById('moviesGrid');
 
-grid.innerHTML='';
+const search = document.getElementById('searchInput')
+.value.toLowerCase();
+
+grid.innerHTML = '';
 
 movies
-.filter(movie => movie.name.toLowerCase().includes(search))
+.filter(movie =>
+movie.name.toLowerCase().includes(search)
+)
+
 .forEach((movie,index)=>{
 
 grid.innerHTML += `
+
 <div class="movie-card">
 
 <img src="${movie.image}">
@@ -46,7 +56,7 @@ grid.innerHTML += `
 <div class="actions">
 
 <button class="watch"
-onclick="window.open('${movie.video}')">
+onclick="watchMovie('${movie.video}')">
 Daawo
 </button>
 
@@ -58,12 +68,45 @@ Download
 </div>
 
 </div>
+
 </div>
+
 `;
 
 });
 
 renderManager();
+
+}
+
+function watchMovie(video){
+
+const newWindow = window.open("");
+
+newWindow.document.write(`
+
+<style>
+body{
+margin:0;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+video{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+</style>
+
+<video controls autoplay>
+<source src="${video}">
+</video>
+
+`);
+
 }
 
 function renderManager(){
@@ -77,23 +120,54 @@ manager.innerHTML = "";
 movies.forEach((movie,index)=>{
 
 manager.innerHTML += `
-<div style="background:#18284b;padding:10px;border-radius:10px;margin-top:10px;">
-<b>${movie.name}</b>
-<button onclick="deleteMovie(${index})" style="background:red;color:white;border:none;padding:8px 12px;border-radius:8px;float:right;cursor:pointer;">
+
+<div style="
+background:#18284b;
+padding:10px;
+margin-top:10px;
+border-radius:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+">
+
+<span>${movie.name}</span>
+
+<button onclick="deleteMovie(${index})"
+style="
+background:red;
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:8px;
+cursor:pointer;
+">
 Delete
 </button>
+
 </div>
+
 `;
 
 });
+
 }
 
 function deleteMovie(index){
 
-if(confirm("Delete movie?")){
+const confirmDelete = confirm("Ma hubtaa inaad delete gareyneyso filmkaan?");
+
+if(confirmDelete){
+
 movies.splice(index,1);
+
 saveMovies();
+
 renderMovies();
+
+alert("Movie Deleted");
+
 }
 
 }
@@ -101,43 +175,63 @@ renderMovies();
 function addMovie(){
 
 const name = document.getElementById("movieName").value;
+
 const actors = document.getElementById("movieActors").value;
+
 const stars = document.getElementById("movieStars").value;
-const video = document.getElementById("movieVideo").value;
+
 const desc = document.getElementById("movieDesc").value;
 
-const fileInput = document.getElementById("movieImageFile");
-const file = fileInput.files[0];
+const imageFile = document.getElementById("movieImageFile").files[0];
 
-if(!file){
-alert("Dooro sawir filmka");
+const videoFile = document.getElementById("movieVideoFile").files[0];
+
+if(!name || !imageFile || !videoFile){
+
+alert("Fill all inputs");
+
 return;
+
 }
 
-const reader = new FileReader();
+const imageReader = new FileReader();
 
-reader.onload = function(e){
+imageReader.onload = function(e){
 
 const image = e.target.result;
 
+const videoReader = new FileReader();
+
+videoReader.onload = function(v){
+
+const video = v.target.result;
+
 movies.unshift({
+
 name,
 actors,
 stars,
 image,
 video,
 desc
+
 });
 
 saveMovies();
+
 renderMovies();
-closeAdmin();
 
 alert("Movie Added Successfully");
 
+closeAdmin();
+
 };
 
-reader.readAsDataURL(file);
+videoReader.readAsDataURL(videoFile);
+
+};
+
+imageReader.readAsDataURL(imageFile);
 
 }
 
@@ -172,8 +266,11 @@ const user = localStorage.getItem("laacibUser");
 if(user){
 
 googleBtn.innerHTML = `
+
 <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
+
 <span>${user}</span>
+
 `;
 
 }
@@ -200,4 +297,6 @@ location.reload();
 
 };
 
-document.getElementById('searchInput').addEventListener('input',renderMovies);
+document
+.getElementById('searchInput')
+.addEventListener('input',renderMovies);
