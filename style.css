@@ -138,6 +138,15 @@ cursor:pointer;
 transition:.3s;
 }
 
+#googleBtn:hover{
+transform:scale(1.05);
+}
+
+#googleBtn img{
+width:25px;
+height:25px;
+}
+
 .search-box input{
 width:260px;
 padding:12px 15px;
@@ -160,12 +169,25 @@ linear-gradient(to right,#000000d9,#00000092),
 url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop');
 background-size:cover;
 background-position:center;
+position:relative;
+overflow:hidden;
+}
+
+.hero-content{
+position:relative;
+z-index:2;
 }
 
 .hero h2{
 font-size:70px;
 color:gold;
 font-weight:900;
+}
+
+.hero p{
+margin-top:18px;
+font-size:22px;
+opacity:.9;
 }
 
 .container{
@@ -189,6 +211,13 @@ gap:30px;
 background:#0f1729;
 border-radius:25px;
 overflow:hidden;
+border:1px solid rgba(255,255,255,.06);
+transition:.5s;
+}
+
+.movie-card:hover{
+transform:translateY(-12px) scale(1.02);
+box-shadow:0 0 40px rgba(255,215,0,.18);
 }
 
 .movie-card img{
@@ -207,6 +236,17 @@ margin-bottom:10px;
 color:gold;
 }
 
+.movie-info p{
+opacity:.85;
+line-height:1.8;
+}
+
+.stars{
+margin:12px 0;
+font-size:20px;
+color:gold;
+}
+
 .actions{
 display:flex;
 gap:12px;
@@ -220,6 +260,7 @@ border:none;
 border-radius:14px;
 font-weight:700;
 cursor:pointer;
+transition:.3s;
 }
 
 .watch{
@@ -230,6 +271,26 @@ color:black;
 .download{
 background:#20345d;
 color:white;
+}
+
+.rating-box{
+margin-top:18px;
+}
+
+.rating-box input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+background:#18284b;
+color:white;
+}
+
+footer{
+text-align:center;
+padding:30px;
+margin-top:30px;
+background:#091120;
 }
 
 #adminPanel{
@@ -255,6 +316,12 @@ max-width:500px;
 border:2px solid gold;
 }
 
+.admin-box h2{
+text-align:center;
+color:gold;
+margin-bottom:20px;
+}
+
 .admin-box input,
 .admin-box textarea{
 width:100%;
@@ -264,6 +331,11 @@ border:none;
 border-radius:12px;
 background:#18284b;
 color:white;
+}
+
+.admin-box textarea{
+height:100px;
+resize:none;
 }
 
 .admin-box button{
@@ -286,14 +358,7 @@ background:red;
 color:white;
 }
 
-footer{
-text-align:center;
-padding:30px;
-margin-top:30px;
-background:#091120;
-}
-
 @keyframes float{
 from{transform:translateY(-5px);}
 to{transform:translateY(5px);}
-  }
+}
