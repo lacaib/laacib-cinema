@@ -1,739 +1,1229 @@
 <!DOCTYPE html>
-<html lang="so">
+<html lang="so" dir="ltr">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Laacib Cinema</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;900&display=swap" rel="stylesheet">
-
+<title>Laacib Cinema - Filimada Soomaalida</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #1a1a26;
+    --border: #2a2a40;
+    --gold: #e8b86d;
+    --gold2: #f5d48e;
+    --red: #c0392b;
+    --red2: #e74c3c;
+    --text: #f0eee8;
+    --muted: #888899;
+    --accent: #4a90d9;
+  }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-body{
-background:#020617;
-color:white;
-overflow-x:hidden;
-}
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px 20px;
-background:#0f172a;
-position:sticky;
-top:0;
-z-index:999;
-}
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
 
-.logo{
-display:flex;
-align-items:center;
-gap:15px;
-}
+  /* ===== NAVBAR ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+  }
 
-.logo img{
-width:60px;
-height:60px;
-}
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-.logo h1{
-font-size:32px;
-color:gold;
-}
+  .nav-logo span {
+    color: var(--red2);
+    -webkit-text-fill-color: var(--red2);
+  }
 
-.logo p{
-opacity:.7;
-}
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
 
-.search-box input{
-padding:12px;
-border:none;
-border-radius:12px;
-outline:none;
-width:220px;
-}
+  .nav-links a, .nav-links button {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    padding: 0.3rem 0.6rem;
+  }
 
-.hero{
-height:420px;
-background:
-linear-gradient(to right,#000000c0,#00000080),
-url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1600&auto=format&fit=crop');
+  .nav-links a:hover, .nav-links button:hover { color: var(--gold); }
 
-background-size:cover;
-background-position:center;
+  .btn-admin {
+    border: 1px solid var(--gold) !important;
+    border-radius: 4px !important;
+    color: var(--gold) !important;
+    padding: 0.3rem 1rem !important;
+  }
 
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
-}
+  /* ===== HERO ===== */
+  #hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
 
-.hero h2{
-font-size:70px;
-color:gold;
-text-shadow:0 0 25px gold;
-}
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(192,57,43,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 30%, rgba(232,184,109,0.12) 0%, transparent 55%),
+      linear-gradient(180deg, #0a0a0f 0%, #0f0f18 100%);
+  }
 
-.hero p{
-font-size:25px;
-margin-top:15px;
-}
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.015) 60px, rgba(255,255,255,0.015) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.015) 60px, rgba(255,255,255,0.015) 61px);
+  }
 
-.container{
-padding:40px 25px;
-}
+  .hero-content { position: relative; z-index: 2; }
 
-.section-title{
-font-size:45px;
-margin-bottom:25px;
-color:gold;
-}
+  .hero-eyebrow {
+    font-size: 0.85rem;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
 
-.movies-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:25px;
-}
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, #fff 30%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+    margin-bottom: 0.3rem;
+  }
 
-.movie-card{
-background:#111827;
-border-radius:22px;
-overflow:hidden;
-transition:.4s;
-position:relative;
-box-shadow:0 0 25px rgba(0,0,0,.4);
-}
+  .hero-sub {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--gold2);
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-family: 'Bebas Neue', sans-serif;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+    margin-bottom: 2rem;
+  }
 
-.movie-card:hover{
-transform:translateY(-10px);
-}
+  .hero-desc {
+    color: var(--muted);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
 
-.movie-image{
-position:relative;
-}
+  .hero-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
 
-.movie-image img{
-width:100%;
-height:380px;
-object-fit:cover;
-}
+  .btn-primary {
+    background: linear-gradient(135deg, var(--red), var(--red2));
+    color: #fff;
+    border: none;
+    padding: 0.85rem 2.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
 
-.movie-year{
-position:absolute;
-top:15px;
-left:15px;
-background:gold;
-color:black;
-padding:8px 14px;
-border-radius:30px;
-font-weight:bold;
-font-size:15px;
-box-shadow:0 0 10px rgba(0,0,0,.4);
-}
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(231,76,60,0.4);
+  }
 
-.movie-info{
-padding:20px;
-}
+  .btn-outline {
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.85rem 2.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
 
-.movie-info h3{
-font-size:30px;
-margin-bottom:10px;
-color:gold;
-}
+  .btn-outline:hover {
+    background: var(--gold);
+    color: var(--bg);
+  }
 
-.movie-info p{
-opacity:.85;
-line-height:1.7;
-margin-bottom:15px;
-}
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-.rating{
-font-size:20px;
-color:gold;
-margin-bottom:15px;
-}
+  /* ===== SECTIONS ===== */
+  section {
+    padding: 5rem 2rem;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
 
-.watch-btn,
-.download-btn,
-.add-btn,
-.delete-btn{
-width:100%;
-padding:14px;
-border:none;
-border-radius:12px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
 
-.watch-btn{
-background:#2563eb;
-color:white;
-}
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+    color: var(--text);
+  }
 
-.download-btn{
-background:gold;
-color:black;
-text-decoration:none;
-display:block;
-text-align:center;
-}
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+  }
 
-.add-btn{
-background:#16a34a;
-color:white;
-}
+  /* ===== MOVIE GRID ===== */
+  .movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
 
-.delete-btn{
-background:red;
-color:white;
-}
+  .movie-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+    position: relative;
+  }
 
-footer{
-background:#0f172a;
-padding:25px;
-text-align:center;
-margin-top:50px;
-font-size:22px;
-}
+  .movie-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: var(--gold);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+  }
 
-.video-modal{
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000000f0;
-justify-content:center;
-align-items:center;
-padding:20px;
-z-index:99999;
-}
+  .movie-thumb {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    display: block;
+    background: var(--border);
+  }
 
-.video-box{
-width:100%;
-max-width:900px;
-}
+  .movie-thumb-placeholder {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--gold);
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 
-.video-box iframe{
-width:100%;
-height:500px;
-border:none;
-border-radius:20px;
-}
+  .movie-thumb-placeholder .movie-icon { font-size: 2.5rem; }
 
-.close-video{
-width:100%;
-padding:15px;
-margin-top:15px;
-background:red;
-color:white;
-border:none;
-border-radius:12px;
-font-size:18px;
-cursor:pointer;
-}
+  .movie-info {
+    padding: 0.8rem;
+  }
 
-.admin-box{
-background:#111827;
-padding:25px;
-border-radius:20px;
-margin-bottom:40px;
-display:none;
-}
+  .movie-title {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
-.admin-box h2{
-margin-bottom:20px;
-color:gold;
-}
+  .movie-meta {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-.admin-box input,
-.admin-box textarea{
-width:100%;
-padding:14px;
-margin-top:12px;
-border:none;
-border-radius:12px;
-background:#1e293b;
-color:white;
-}
+  .badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
 
-.admin-box textarea{
-height:120px;
-resize:none;
-}
+  .badge-genre {
+    background: rgba(232,184,109,0.15);
+    color: var(--gold);
+    border: 1px solid rgba(232,184,109,0.3);
+  }
 
-@media(max-width:700px){
+  .badge-year {
+    background: rgba(74,144,217,0.15);
+    color: var(--accent);
+    border: 1px solid rgba(74,144,217,0.3);
+  }
 
-header{
-flex-direction:column;
-gap:15px;
-}
+  .movie-play-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 3rem;
+    color: #fff;
+  }
 
-.hero h2{
-font-size:50px;
-}
+  .movie-card:hover .movie-play-overlay { opacity: 1; }
 
-.hero p{
-font-size:20px;
-}
+  /* ===== EMPTY STATE ===== */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+    grid-column: 1/-1;
+  }
 
-.search-box input{
-width:100%;
-}
+  .empty-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .empty-state h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text); }
 
-.video-box iframe{
-height:250px;
-}
+  /* ===== SEARCH BAR ===== */
+  .search-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
 
-}
+  .search-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 1.2rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
 
+  .search-input:focus { border-color: var(--gold); }
+
+  .filter-select {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 1rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .filter-select:focus { border-color: var(--gold); }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalIn 0.3s ease;
+  }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-header {
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    color: var(--gold);
+  }
+
+  .modal-close {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--red2); }
+
+  .modal-body { padding: 1.5rem; }
+
+  /* ===== FORMS ===== */
+  .form-group { margin-bottom: 1.2rem; }
+
+  .form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.8rem 1rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--gold);
+  }
+
+  .form-textarea { min-height: 90px; resize: vertical; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .btn-full {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+  }
+
+  /* ===== ADMIN PANEL ===== */
+  #admin-panel {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 150;
+    overflow-y: auto;
+  }
+
+  #admin-panel.open { display: block; }
+
+  .admin-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .admin-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+  }
+
+  .admin-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .admin-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .admin-movie-list { margin-top: 1rem; }
+
+  .admin-movie-row {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.7rem;
+    transition: border-color 0.2s;
+  }
+
+  .admin-movie-row:hover { border-color: var(--border); }
+
+  .admin-movie-thumb {
+    width: 48px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: var(--border);
+  }
+
+  .admin-movie-info { flex: 1; }
+
+  .admin-movie-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .admin-movie-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .admin-actions { display: flex; gap: 0.5rem; }
+
+  .btn-icon {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-icon:hover { color: var(--text); border-color: var(--muted); }
+  .btn-icon.danger:hover { color: var(--red2); border-color: var(--red2); }
+
+  /* ===== LOGIN MODAL ===== */
+  .login-icon {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .error-msg {
+    background: rgba(231,76,60,0.15);
+    border: 1px solid rgba(231,76,60,0.3);
+    color: var(--red2);
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  .error-msg.show { display: block; }
+
+  /* ===== VIDEO MODAL ===== */
+  .video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #000;
+  }
+
+  .video-wrap iframe, .video-wrap video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .movie-detail-poster {
+    width: 120px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    flex-shrink: 0;
+    background: var(--border);
+  }
+
+  .movie-detail-poster-ph {
+    width: 120px;
+    height: 160px;
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    flex-shrink: 0;
+  }
+
+  .movie-detail-row {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .movie-detail-text h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.4rem;
+  }
+
+  .movie-detail-desc {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--card);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 0.8rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+    z-index: 999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  .toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  footer strong { color: var(--gold); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+    .movie-detail-row { flex-direction: column; }
+    nav { padding: 0 1rem; }
+    .nav-logo { font-size: 1.4rem; }
+    .hero-btns { flex-direction: column; align-items: center; }
+  }
 </style>
-
 </head>
-
 <body>
 
-<header>
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">Laacib <span>Cinema</span></div>
+  <div class="nav-links">
+    <a href="#movies">Filimada</a>
+    <a href="#about">Nagu Saabsan</a>
+    <button class="btn-admin" onclick="openLoginModal()">👤 Admin</button>
+  </div>
+</nav>
 
-<div class="logo">
-
-<img src="https://cdn-icons-png.flaticon.com/512/3418/3418886.png">
-
-<div>
-
-<h1>Laacib Cinema</h1>
-
-<p>Aflaanta Ugu Fiican</p>
-
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">🎬 Xarunta Filimada Soomaalida</div>
+    <div class="hero-title">Laacib<br>Cinema</div>
+    <div class="hero-sub">Filimada Ugu Fiican</div>
+    <p class="hero-desc">Daawashada filimada Soomaalida oo leh tayada ugu sareeya. Ku mahadsan yahay booqashadaada!</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="scrollToMovies()">🎬 Daawashada Billow</button>
+      <button class="btn-outline" onclick="scrollToMovies()">📽️ Dhammaan Filimada</button>
+    </div>
+  </div>
 </div>
 
-</div>
+<!-- MOVIES SECTION -->
+<section id="movies">
+  <div class="section-header">
+    <h2 class="section-title">🎬 Filimada</h2>
+    <div class="section-line"></div>
+  </div>
 
-<div class="search-box">
+  <div class="search-bar">
+    <input class="search-input" type="text" id="searchInput" placeholder="🔍 Raadi filim..." oninput="renderMovies()">
+    <select class="filter-select" id="genreFilter" onchange="renderMovies()">
+      <option value="">Dhammaan Noocyada</option>
+      <option value="Dramada">Dramada</option>
+      <option value="Komediyada">Komediyada</option>
+      <option value="Ficilka">Ficilka</option>
+      <option value="Jacaylka">Jacaylka</option>
+      <option value="Xilliga Carruurnimada">Xilliga Carruurnimada</option>
+      <option value="Dhacdo Dhabta ah">Dhacdo Dhabta ah</option>
+      <option value="Nooce Kale">Nooce Kale</option>
+    </select>
+  </div>
 
-<input type="text" id="searchInput" placeholder="Raadi Filim...">
-
-</div>
-
-</header>
-
-<section class="hero">
-
-<div>
-
-<h2>Laacib Cinema</h2>
-
-<p>Goobta ugu fiican aflaanta iyo musalsallada</p>
-
-</div>
-
+  <div class="movie-grid" id="movieGrid"></div>
 </section>
 
-<div class="container">
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header">
+    <h2 class="section-title">🌙 Nagu Saabsan</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="color:var(--muted);font-size:1.1rem;line-height:1.8;max-width:700px;">
+    <strong style="color:var(--gold)">Laacib Cinema</strong> waxay u taagan tahay xarunta ugu weyn ee filimada Soomaalida online ah. Waxaanu ku dadaalaynnaa in aan keenno filimada ugu fiican iyo ugu cusub si fudud oo loogu doon doono.
+    <br><br>
+    Websaydkaan waxaa sameeya koox jecel farshaxanka Soomaalida iyo dhaqanka <strong style="color:var(--gold2)">Soomaalida</strong>. Xiriir nala: <a href="https://lacaib.github.io/laacib-cinema/" style="color:var(--accent)">lacaib.github.io/laacib-cinema</a>
+  </p>
+</section>
 
-<!-- ADMIN -->
-
-<div class="admin-box" id="adminBox">
-
-<h2>Admin Panel</h2>
-
-<input type="text" id="movieTitle" placeholder="Magaca Filimka">
-
-<textarea id="movieDesc" placeholder="Sharaxaad"></textarea>
-
-<input type="text" id="movieRating" placeholder="Rating ★★★★★">
-
-<input type="text" id="movieYear" placeholder="Taariikhda Soo Saarista">
-
-<input type="text" id="movieImage" placeholder="Link Sawirka">
-
-<input type="text" id="movieVideo" placeholder="Link YouTube">
-
-<input type="text" id="movieDownload" placeholder="Link Download">
-
-<button class="add-btn" onclick="addMovie()">
-
-Ku Dar Filim
-
-</button>
-
-</div>
-
-<h2 class="section-title">
-
-Aflaanta Cusub
-
-</h2>
-
-<div class="movies-grid" id="moviesGrid"></div>
-
-</div>
-
+<!-- FOOTER -->
 <footer>
-
-Laacib Cinema © 2026
-
+  <strong>Laacib Cinema</strong><br>
+  © 2025 — Dhammaan Xuquuqda Waa Xafidan Yihiin<br>
+  <a href="https://lacaib.github.io/laacib-cinema/" style="color:var(--accent);margin-top:0.5rem;display:inline-block;">🌐 lacaib.github.io/laacib-cinema</a>
 </footer>
 
-<!-- VIDEO -->
+<!-- ====== MODALS ====== -->
 
-<div class="video-modal" id="videoModal">
-
-<div class="video-box">
-
-<iframe id="videoFrame" allowfullscreen></iframe>
-
-<button class="close-video" onclick="closeVideo()">
-
-Xir
-
-</button>
-
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <span class="modal-title">Admin Login</span>
+      <button class="modal-close" onclick="closeModal('loginModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="login-icon">🔐</div>
+      <div class="error-msg" id="loginError">Passwordka qaldan. Isku day mar kale.</div>
+      <div class="form-group">
+        <label class="form-label">Magaca (Username)</label>
+        <input class="form-input" type="text" id="loginUser" placeholder="admin">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sirta Gaarka ah (Password)</label>
+        <input class="form-input" type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+      </div>
+      <button class="btn-primary btn-full" onclick="doLogin()">🚪 Gal</button>
+    </div>
+  </div>
 </div>
 
+<!-- Movie View Modal -->
+<div class="modal-overlay" id="viewModal">
+  <div class="modal" style="max-width:700px">
+    <div class="modal-header">
+      <span class="modal-title" id="viewTitle">Filimka</span>
+      <button class="modal-close" onclick="closeModal('viewModal')">✕</button>
+    </div>
+    <div class="modal-body" id="viewBody"></div>
+  </div>
 </div>
+
+<!-- ====== ADMIN PANEL ====== -->
+<div id="admin-panel">
+  <div class="admin-nav">
+    <span class="admin-title">🎬 Maamulka — Laacib Cinema</span>
+    <div style="display:flex;gap:0.8rem;align-items:center;">
+      <button class="btn-primary" onclick="openAddModal()" style="padding:0.5rem 1.5rem;font-size:0.95rem">+ Kudar Filim</button>
+      <button class="btn-outline" onclick="closeAdmin()" style="padding:0.5rem 1.2rem;font-size:0.95rem">✕ Xidh</button>
+    </div>
+  </div>
+  <div class="admin-content">
+    <div class="admin-stats" id="adminStats"></div>
+    <div class="section-header">
+      <h2 class="section-title">Liiska Filimada</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="admin-movie-list" id="adminMovieList"></div>
+  </div>
+</div>
+
+<!-- Add/Edit Movie Modal -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="addModalTitle">Kudar Filim Cusub</span>
+      <button class="modal-close" onclick="closeModal('addModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Magaca Filimka *</label>
+          <input class="form-input" type="text" id="fTitle" placeholder="Magaca Filimka">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sanadka</label>
+          <input class="form-input" type="number" id="fYear" placeholder="2024" min="1990" max="2030">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nooca Filimka</label>
+          <select class="form-select" id="fGenre">
+            <option value="Dramada">Dramada</option>
+            <option value="Komediyada">Komediyada</option>
+            <option value="Ficilka">Ficilka</option>
+            <option value="Jacaylka">Jacaylka</option>
+            <option value="Xilliga Carruurnimada">Xilliga Carruurnimada</option>
+            <option value="Dhacdo Dhabta ah">Dhacdo Dhabta ah</option>
+            <option value="Nooce Kale">Nooce Kale</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Xilliyada (Muddo)</label>
+          <input class="form-input" type="text" id="fDuration" placeholder="Tusaale: 1s 45d">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sharraxaadda Filimka</label>
+        <textarea class="form-textarea" id="fDesc" placeholder="Qoraal kooban oo ku saabsan filimka..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sawirka (URL — Poster)</label>
+        <input class="form-input" type="text" id="fPoster" placeholder="https://...jpg">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Linkiga Fiidiyowga (YouTube / URL)</label>
+        <input class="form-input" type="text" id="fVideo" placeholder="https://youtube.com/watch?v=... ama URL kale">
+      </div>
+      <button class="btn-primary btn-full" onclick="saveMovie()">💾 Keydi Filimka</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script>
-
-const ADMIN_PASSWORD =
-"IPHONE33@FOYJ45@";
-
-const moviesGrid =
-document.getElementById("moviesGrid");
-
-const adminBox =
-document.getElementById("adminBox");
-
-
-// ADMIN LOGIN
-
-if(window.location.hash === "#admin"){
-
-const pass =
-prompt("Geli Password-ka Admin");
-
-if(pass === ADMIN_PASSWORD){
-
-adminBox.style.display = "block";
-
-}else{
-
-alert("Password Khaldan");
-
-window.location.href =
-"https://lacaib.github.io/laacib-cinema/";
-
-}
-
-}
-
-
-// STORAGE
-
-let movies = JSON.parse(
-localStorage.getItem("movies")
-) || [
-
-{
-title:"Bile alta",
-desc:"Best Movie",
-rating:"9.1",
-year:"2026",
-image:"https://i.imgur.com/yhQ5XxY.jpeg",
-video:"https://www.youtube.com/embed/_zw_DKOiXcY",
-download:"https://youtu.be/_zw_DKOiXcY?si=hTMipxyfI3LS98ud"
-}
-
-];
-
-
-// SAVE
-
-function saveMovies(){
-
-localStorage.setItem(
-"movies",
-JSON.stringify(movies)
-);
-
-}
-
-
-// CONVERT YOUTUBE
-
-function convertYoutube(url){
-
-if(url.includes("watch?v=")){
-
-return url.replace(
-"watch?v=",
-"embed/"
-);
-
-}
-
-if(url.includes("youtu.be/")){
-
-return "https://www.youtube.com/embed/" +
-url.split("youtu.be/")[1];
-
-}
-
-return url;
-
-}
-
-
-// LOAD MOVIES
-
-function loadMovies(){
-
-moviesGrid.innerHTML = "";
-
-movies.forEach((movie,index)=>{
-
-moviesGrid.innerHTML += `
-
-<div class="movie-card">
-
-<div class="movie-image">
-
-<img src="${movie.image}">
-
-<div class="movie-year">
-
-📅 ${movie.year}
-
-</div>
-
-</div>
-
-<div class="movie-info">
-
-<h3>${movie.title}</h3>
-
-<p>${movie.desc}</p>
-
-<div class="rating">
-
-⭐ ${movie.rating}
-
-</div>
-
-<button
-class="watch-btn"
-onclick="watchMovie('${movie.video}')">
-
-Daawo Filim
-
-</button>
-
-<a
-href="${movie.download}"
-target="_blank"
-class="download-btn">
-
-Download
-
-</a>
-
-${
-window.location.hash === "#admin"
-?
-
-`
-<button
-class="delete-btn"
-onclick="deleteMovie(${index})">
-
-Tirtir Filim
-
-</button>
-`
-
-:
-
-""
-
-}
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-
-// ADD MOVIE
-
-window.addMovie = function(){
-
-const title =
-document.getElementById("movieTitle").value;
-
-const desc =
-document.getElementById("movieDesc").value;
-
-const rating =
-document.getElementById("movieRating").value;
-
-const year =
-document.getElementById("movieYear").value;
-
-const image =
-document.getElementById("movieImage").value;
-
-const video =
-convertYoutube(
-document.getElementById("movieVideo").value
-);
-
-const download =
-document.getElementById("movieDownload").value;
-
-if(
-!title ||
-!image ||
-!video
-){
-
-alert("Buuxi Xogta");
-
-return;
-
-}
-
-movies.unshift({
-
-title,
-desc,
-rating,
-year,
-image,
-video,
-download
-
-});
-
-saveMovies();
-
-loadMovies();
-
-alert("Filimka Waa Lagu Daray");
-
-document.getElementById("movieTitle").value = "";
-document.getElementById("movieDesc").value = "";
-document.getElementById("movieRating").value = "";
-document.getElementById("movieYear").value = "";
-document.getElementById("movieImage").value = "";
-document.getElementById("movieVideo").value = "";
-document.getElementById("movieDownload").value = "";
-
-};
-
-
-// DELETE MOVIE
-
-window.deleteMovie = function(index){
-
-const ask =
-confirm("Ma Tirtiraysaa Filimkan?");
-
-if(!ask) return;
-
-movies.splice(index,1);
-
-saveMovies();
-
-loadMovies();
-
-alert("Filimka Waa La Tirtiray");
-
-};
-
-
-// WATCH MOVIE
-
-window.watchMovie = function(link){
-
-document.getElementById(
-"videoModal"
-).style.display = "flex";
-
-document.getElementById(
-"videoFrame"
-).src = link;
-
-};
-
-
-// CLOSE VIDEO
-
-window.closeVideo = function(){
-
-document.getElementById(
-"videoModal"
-).style.display = "none";
-
-document.getElementById(
-"videoFrame"
-).src = "";
-
-};
-
-
-// SEARCH
-
-document
-.getElementById("searchInput")
-.addEventListener("input",(e)=>{
-
-const value =
-e.target.value.toLowerCase();
-
-const cards =
-document.querySelectorAll(".movie-card");
-
-cards.forEach(card=>{
-
-const title =
-card.querySelector("h3")
-.innerText
-.toLowerCase();
-
-card.style.display =
-title.includes(value)
-? "block"
-: "none";
-
-});
-
-});
-
-
-// START
-
-loadMovies();
-
+  // =================== DATA ===================
+  const ADMIN_PASS = 'IPhone33@foyj45@';
+  const STORAGE_KEY = 'laacib_cinema_movies';
+  let isAdmin = false;
+  let editingId = null;
+
+  const DEFAULT_MOVIES = [
+    {
+      id: 1,
+      title: 'Hooyo Macaan',
+      year: 2022,
+      genre: 'Dramada',
+      duration: '1s 50d',
+      desc: 'Sheeko gacmaha-gashay oo ku saabsan jacaylka hooyo iyo gabadheeda. Filimkani wuxuu muujinayaa xiriirka qiimaha leh ee qoyska Soomaalida.',
+      poster: '',
+      video: ''
+    },
+    {
+      id: 2,
+      title: 'Nin Gees ah',
+      year: 2023,
+      genre: 'Ficilka',
+      duration: '2s 10d',
+      desc: 'Ficil badan oo buuxa! Nin dhiirranaa oo u dagaallama xorriyada bulshada. Filim xasaasi ah oo qiimaynaya noloshii hore.',
+      poster: '',
+      video: ''
+    },
+    {
+      id: 3,
+      title: 'Wadajir',
+      year: 2024,
+      genre: 'Komediyada',
+      duration: '1s 30d',
+      desc: 'Komediya xiiso leh oo ku saabsan asxaab saddex ah oo xaaladaha cudhiga ah ku dhacda. Kaftan iyo xishood badan.',
+      poster: '',
+      video: ''
+    }
+  ];
+
+  function getMovies() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : DEFAULT_MOVIES;
+    } catch { return DEFAULT_MOVIES; }
+  }
+
+  function saveMovies(movies) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(movies));
+  }
+
+  // =================== RENDER ===================
+  function renderMovies() {
+    const grid = document.getElementById('movieGrid');
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const genre = document.getElementById('genreFilter').value;
+    let movies = getMovies();
+
+    if (search) movies = movies.filter(m => m.title.toLowerCase().includes(search) || (m.desc||'').toLowerCase().includes(search));
+    if (genre) movies = movies.filter(m => m.genre === genre);
+
+    if (movies.length === 0) {
+      grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🎬</div><h3>Filim lama helin</h3><p>Isku day raadin kale ama admin ka kudar filimada.</p></div>`;
+      return;
+    }
+
+    grid.innerHTML = movies.map(m => `
+      <div class="movie-card" onclick="openMovie(${m.id})">
+        ${m.poster
+          ? `<img class="movie-thumb" src="${escHtml(m.poster)}" alt="${escHtml(m.title)}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+          : ''}
+        <div class="movie-thumb-placeholder" style="${m.poster ? 'display:none' : ''}">
+          <div class="movie-icon">🎬</div>
+          <span style="font-size:0.8rem;color:var(--muted);text-align:center;padding:0 0.5rem">${escHtml(m.title)}</span>
+        </div>
+        <div class="movie-play-overlay">▶</div>
+        <div class="movie-info">
+          <div class="movie-title">${escHtml(m.title)}</div>
+          <div class="movie-meta">
+            <span class="badge badge-genre">${escHtml(m.genre||'')}</span>
+            ${m.year ? `<span class="badge badge-year">${m.year}</span>` : ''}
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function openMovie(id) {
+    const movies = getMovies();
+    const m = movies.find(x => x.id === id);
+    if (!m) return;
+
+    document.getElementById('viewTitle').textContent = m.title;
+    const body = document.getElementById('viewBody');
+
+    let videoHTML = '';
+    if (m.video) {
+      const ytMatch = m.video.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?]+)/);
+      if (ytMatch) {
+        videoHTML = `<div class="video-wrap"><iframe src="https://www.youtube.com/embed/${ytMatch[1]}" frameborder="0" allowfullscreen></iframe></div>`;
+      } else {
+        videoHTML = `<div class="video-wrap"><video controls><source src="${escHtml(m.video)}">Browsers kaaga ma taageersanid video.</video></div>`;
+      }
+    } else {
+      videoHTML = `<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:3rem;text-align:center;color:var(--muted)">📽️ Video lama kudin filimkan</div>`;
+    }
+
+    body.innerHTML = `
+      <div class="movie-detail-row">
+        ${m.poster
+          ? `<img class="movie-detail-poster" src="${escHtml(m.poster)}" alt="${escHtml(m.title)}" onerror="this.outerHTML='<div class=\\'movie-detail-poster-ph\\'>🎬</div>'">`
+          : `<div class="movie-detail-poster-ph">🎬</div>`}
+        <div class="movie-detail-text">
+          <h2>${escHtml(m.title)}</h2>
+          <div class="movie-meta" style="margin-bottom:0.5rem">
+            <span class="badge badge-genre">${escHtml(m.genre||'')}</span>
+            ${m.year ? `<span class="badge badge-year">${m.year}</span>` : ''}
+            ${m.duration ? `<span class="badge" style="background:rgba(255,255,255,0.07);color:var(--muted)">${escHtml(m.duration)}</span>` : ''}
+          </div>
+          <p class="movie-detail-desc">${escHtml(m.desc||'Sharraxaad la\'aan.')}</p>
+        </div>
+      </div>
+      ${videoHTML}
+    `;
+    openModal('viewModal');
+  }
+
+  // =================== ADMIN ===================
+  function openLoginModal() {
+    if (isAdmin) { openAdminPanel(); return; }
+    document.getElementById('loginUser').value = '';
+    document.getElementById('loginPass').value = '';
+    document.getElementById('loginError').classList.remove('show');
+    openModal('loginModal');
+  }
+
+  function doLogin() {
+    const pass = document.getElementById('loginPass').value;
+    if (pass === ADMIN_PASS) {
+      isAdmin = true;
+      closeModal('loginModal');
+      openAdminPanel();
+      showToast('✅ Admin ahaan waad gashay!');
+    } else {
+      document.getElementById('loginError').classList.add('show');
+      document.getElementById('loginPass').value = '';
+    }
+  }
+
+  function openAdminPanel() {
+    document.getElementById('admin-panel').classList.add('open');
+    renderAdminPanel();
+  }
+
+  function closeAdmin() {
+    document.getElementById('admin-panel').classList.remove('open');
+  }
+
+  function renderAdminPanel() {
+    const movies = getMovies();
+    const genres = [...new Set(movies.map(m => m.genre))];
+
+    document.getElementById('adminStats').innerHTML = `
+      <div class="stat-card"><div class="stat-num">${movies.length}</div><div class="stat-label">Wadarta Filimada</div></div>
+      <div class="stat-card"><div class="stat-num">${genres.length}</div><div class="stat-label">Noocyada</div></div>
+      <div class="stat-card"><div class="stat-num">${movies.filter(m=>m.video).length}</div><div class="stat-label">Leh Video</div></div>
+      <div class="stat-card"><div class="stat-num">${movies.filter(m=>m.poster).length}</div><div class="stat-label">Leh Poster</div></div>
+    `;
+
+    if (movies.length === 0) {
+      document.getElementById('adminMovieList').innerHTML = `<div class="empty-state"><div class="empty-icon">🎬</div><h3>Filim ma jiro</h3><p>Kadaw filimada ugu horreeya!</p></div>`;
+      return;
+    }
+
+    document.getElementById('adminMovieList').innerHTML = movies.map(m => `
+      <div class="admin-movie-row">
+        ${m.poster
+          ? `<img class="admin-movie-thumb" src="${escHtml(m.poster)}" alt="${escHtml(m.title)}" onerror="this.style.background='var(--border)'">`
+          : `<div class="admin-movie-thumb" style="background:var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1.5rem">🎬</div>`}
+        <div class="admin-movie-info">
+          <div class="admin-movie-name">${escHtml(m.title)}</div>
+          <div class="admin-movie-meta">${escHtml(m.genre||'')} ${m.year ? '• '+m.year : ''} ${m.duration ? '• '+m.duration : ''}</div>
+        </div>
+        <div class="admin-actions">
+          <button class="btn-icon" onclick="editMovie(${m.id})" title="Wax ka beddel">✏️</button>
+          <button class="btn-icon danger" onclick="deleteMovie(${m.id})" title="Tirtir">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function openAddModal() {
+    editingId = null;
+    document.getElementById('addModalTitle').textContent = '➕ Kudar Filim Cusub';
+    document.getElementById('editId').value = '';
+    ['fTitle','fYear','fDuration','fDesc','fPoster','fVideo'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('fGenre').value = 'Dramada';
+    openModal('addModal');
+  }
+
+  function editMovie(id) {
+    const movies = getMovies();
+    const m = movies.find(x => x.id === id);
+    if (!m) return;
+    editingId = id;
+    document.getElementById('addModalTitle').textContent = '✏️ Wax ka beddel Filimka';
+    document.getElementById('editId').value = id;
+    document.getElementById('fTitle').value = m.title || '';
+    document.getElementById('fYear').value = m.year || '';
+    document.getElementById('fGenre').value = m.genre || 'Dramada';
+    document.getElementById('fDuration').value = m.duration || '';
+    document.getElementById('fDesc').value = m.desc || '';
+    document.getElementById('fPoster').value = m.poster || '';
+    document.getElementById('fVideo').value = m.video || '';
+    openModal('addModal');
+  }
+
+  function saveMovie() {
+    const title = document.getElementById('fTitle').value.trim();
+    if (!title) { showToast('⚠️ Magaca filimka geli!'); return; }
+
+    const movies = getMovies();
+    const movie = {
+      id: editingId || Date.now(),
+      title,
+      year: parseInt(document.getElementById('fYear').value) || null,
+      genre: document.getElementById('fGenre').value,
+      duration: document.getElementById('fDuration').value.trim(),
+      desc: document.getElementById('fDesc').value.trim(),
+      poster: document.getElementById('fPoster').value.trim(),
+      video: document.getElementById('fVideo').value.trim()
+    };
+
+    if (editingId) {
+      const idx = movies.findIndex(m => m.id === editingId);
+      if (idx > -1) movies[idx] = movie;
+      showToast('✅ Filimka waa la wax ka bedelay!');
+    } else {
+      movies.push(movie);
+      showToast('✅ Filim cusub waa la kudartay!');
+    }
+
+    saveMovies(movies);
+    closeModal('addModal');
+    renderMovies();
+    renderAdminPanel();
+  }
+
+  function deleteMovie(id) {
+    if (!confirm('Miyaad hubantahay inaad tirtiraysid filimkan?')) return;
+    const movies = getMovies().filter(m => m.id !== id);
+    saveMovies(movies);
+    renderMovies();
+    renderAdminPanel();
+    showToast('🗑️ Filimka waa la tirtiray!');
+  }
+
+  // =================== UTILS ===================
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', e => { if (e.target === el) el.classList.remove('open'); });
+  });
+
+  function scrollToMovies() {
+    document.getElementById('movies').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function escHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // =================== INIT ===================
+  renderMovies();
 </script>
-
 </body>
 </html>
